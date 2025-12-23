@@ -15,7 +15,7 @@ export const Loading: React.FC<LoadingProps> = ({ message }) => {
 
       <div className="relative mb-12">
         {/* Main Icon Container */}
-        <div className="relative w-32 h-32 md:w-40 md:h-40 bg-[#FFD93D] rounded-3xl hand-border hand-shadow flex items-center justify-center z-10 transform -rotate-3 overflow-hidden">
+        <div className="relative w-32 h-32 md:w-40 md:h-40 bg-[#7C3AED] rounded-3xl hand-border hand-shadow flex items-center justify-center z-10 transform -rotate-3 overflow-hidden">
 
           {/* Animated Pencil */}
           <div className="relative animate-wiggle-slow">
@@ -50,8 +50,6 @@ export const Loading: React.FC<LoadingProps> = ({ message }) => {
             </div>
           </div>
 
-          {/* Sparkle Decoration inside box */}
-          <Sparkles className="absolute top-2 right-2 text-white/50" size={24} />
         </div>
 
         {/* Orbiting Sparkles */}
