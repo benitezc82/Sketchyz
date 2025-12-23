@@ -711,7 +711,7 @@ const App: React.FC = () => {
 
       <div className="flex gap-4 w-full max-w-md">
         <Button variant="secondary" onClick={() => setAppState(AppState.CAMERA)} className="flex-1 bg-white !text-black border-2 border-black font-logo lowercase">
-          <ArrowLeft size={20} /> Retry
+          <ArrowLeft size={28} strokeWidth={3} /> Retry
         </Button>
         <Button onClick={handleAcceptContext} className="flex-1 bg-[#FF66C4] !text-black font-logo lowercase" icon={<Check size={24} />}>
           Choose Style
