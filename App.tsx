@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Camera, RotateCcw, Download, Wand2, Images, Trash2, Save, ArrowLeft, LayoutGrid, Upload, Sparkles, Star, Share2, Pencil, Check, Key, X, Zap, Heart, Bot, Eye, Bell, Palette, Box, Smile } from 'lucide-react';
+import { GoogleGenAI } from "@google/genai";
 import { AppState, StyleOption, GeneratedResult, GalleryItem } from './types';
 import { STYLES } from './constants';
 import * as GeminiService from './services/geminiService';
@@ -131,7 +132,31 @@ const App: React.FC = () => {
       // 2. Check for Project IDX / AI Studio Key
       if (window.aistudio?.hasSelectedApiKey) {
         const isSelected = await window.aistudio.hasSelectedApiKey();
-        setHasApiKey(isSelected);
+        if (isSelected) {
+          setHasApiKey(true);
+          return;
+        }
+      }
+
+      // 3. Health Check validating the VITE_ key if present
+      const envKey = import.meta.env.VITE_GEMINI_API_KEY;
+      if (envKey) {
+        try {
+          console.log("🔑 Validating API Key...");
+          // Simple ping to check if key works
+          const ai = new GoogleGenAI({ apiKey: envKey });
+          await ai.models.generateContent({
+            model: 'gemini-2.0-flash-exp',
+            contents: { parts: [{ text: 'Test' }] }
+          });
+          console.log("✅ API Key Validated!");
+          setHasApiKey(true);
+        } catch (validationError: any) {
+          console.error("❌ API Key Validation Failed:", validationError);
+          setHasApiKey(false);
+          // Show the validation error on the locked screen (we'll need to render error in renderWelcome too, which we do)
+          setError(`Valid Key Found but Access Denied: ${validationError.message}`);
+        }
       }
     };
 
