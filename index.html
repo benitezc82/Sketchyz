@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Sketchyz</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Imported Fredoka for a unified, clean, friendly look across the whole app */
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+
+    body {
+      font-family: 'Fredoka', sans-serif;
+      background-color: #FFF9F0;
+      color: #1a1a1a;
+      touch-action: manipulation;
+      background-image: radial-gradient(#E5E0D8 1.5px, transparent 1.5px);
+      background-size: 24px 24px;
+    }
+
+    /* Modern Font Utility - Now matches body for consistency */
+    .font-logo {
+      font-family: 'Fredoka', sans-serif;
+    }
+
+    /* Organic "Hand Drawn" utilities */
+    .hand-border {
+      border: 3px solid #1a1a1a;
+    }
+
+    .hand-shadow {
+      box-shadow: 5px 5px 0px 0px #1a1a1a;
+    }
+
+    .hand-shadow-sm {
+      box-shadow: 3px 3px 0px 0px #1a1a1a;
+    }
+
+    .hand-shadow-hover:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 7px 7px 0px 0px #1a1a1a;
+    }
+
+    .hand-shadow-active:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0px 0px #1a1a1a;
+    }
+
+    .text-outline {
+      /* Thinner stroke for better legibility */
+      -webkit-text-stroke: 1.5px #1a1a1a;
+      text-shadow: 3px 3px 0px #1a1a1a;
+    }
+
+    .text-outline-sm {
+      -webkit-text-stroke: 0.5px #1a1a1a;
+    }
+
+    /* Animations */
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0px) rotate(12deg);
+      }
+
+      50% {
+        transform: translateY(-10px) rotate(15deg);
+      }
+    }
+
+    .animate-float {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes wiggle {
+
+      0%,
+      100% {
+        transform: rotate(-3deg);
+      }
+
+      50% {
+        transform: rotate(3deg);
+      }
+    }
+
+    .animate-wiggle-slow {
+      animation: wiggle 4s ease-in-out infinite;
+    }
+  </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.1/",
+    "react": "https://esm.sh/react@^19.2.1",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.1/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.32.0",
+    "lucide-react": "https://esm.sh/lucide-react@^0.559.0"
+  }
+}
+</script>
+  <link rel="stylesheet" href="/index.css">
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+
+</html>

@@ -1,0 +1,7 @@
+{
+  "name": "Sketchyz",
+  "description": "A magical creative studio for kids that turns drawings into amazing art!",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
