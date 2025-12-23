@@ -76,7 +76,7 @@ export const STYLES: StyleOption[] = [
     name: '3D Render',
     icon: '🧊',
     color: 'bg-[#FF66C4]', // Pink
-    description: 'High-fidelity 3D CGI render. Octane Render, Unreal Engine 5 style. Volumetric lighting, 3D plastic/glossy materials, ambient occlusion. Soft edges, rounded shapes. Looks like a high-end 3D art piece, NOT a 2D drawing, NOT a comic.'
+    description: 'Pixar-style 3D animation render. Disney/Pixar movie still. High-end CGI character design. smooth, cute, expressive, volumetric lighting, redshift, 4k. Looks like a 3D movie frame. 3D solid geometry, depth of field. NOT a 2D drawing, NOT a comic.'
   },
   {
     id: 'watercolor',
