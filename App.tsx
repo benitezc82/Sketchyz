@@ -138,25 +138,16 @@ const App: React.FC = () => {
         }
       }
 
-      // 3. Health Check validating the VITE_ key if present
+      // 3. Simple Existence Check (Relaxed)
       const envKey = import.meta.env.VITE_GEMINI_API_KEY;
-      if (envKey) {
-        try {
-          console.log("🔑 Validating API Key...");
-          // Simple ping to check if key works
-          const ai = new GoogleGenAI({ apiKey: envKey });
-          await ai.models.generateContent({
-            model: 'gemini-2.0-flash-exp',
-            contents: { parts: [{ text: 'Test' }] }
-          });
-          console.log("✅ API Key Validated!");
-          setHasApiKey(true);
-        } catch (validationError: any) {
-          console.error("❌ API Key Validation Failed:", validationError);
-          setHasApiKey(false);
-          // Show the validation error on the locked screen (we'll need to render error in renderWelcome too, which we do)
-          setError(`Valid Key Found but Access Denied: ${validationError.message}`);
-        }
+
+      // Allow any key to pass the "Locked" screen. 
+      // Validation will happen during generation (Purple Error Box).
+      if (envKey && envKey.length > 0) {
+        console.log("🔑 API Key Detected (Length: " + envKey.length + ")");
+        setHasApiKey(true);
+      } else {
+        console.log("❌ No API Key found in environment variables");
       }
     };
 
