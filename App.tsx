@@ -74,6 +74,7 @@ const App: React.FC = () => {
   const [hasApiKey, setHasApiKey] = useState<boolean>(false);
   const [currentPrompt, setCurrentPrompt] = useState<string>(""); // Store prompt for editing
   const [useResultAsInput, setUseResultAsInput] = useState<boolean>(false); // Iterative toggle
+  const [facingMode, setFacingMode] = useState<'user' | 'environment'>('environment');
 
   const [generationCount, setGenerationCount] = useState<number>(() => {
     return parseInt(localStorage.getItem('sketchyz_gen_count') || '0');
@@ -125,7 +126,7 @@ const App: React.FC = () => {
         try {
           const constraints = {
             video: {
-              facingMode: { ideal: 'environment' },
+              facingMode: { ideal: facingMode },
               width: { ideal: 1280 },
               height: { ideal: 720 }
             },
@@ -157,7 +158,7 @@ const App: React.FC = () => {
         streamRef.current = null;
       }
     };
-  }, [appState]);
+  }, [appState, facingMode]);
 
   // --- Handlers ---
 
@@ -181,6 +182,12 @@ const App: React.FC = () => {
     setAppState(AppState.LIVE_CAMERA);
     setError(null);
   };
+
+  const toggleCamera = () => {
+    setFacingMode(prev => prev === 'environment' ? 'user' : 'environment');
+  };
+
+
 
   const capturePhoto = () => {
     if (videoRef.current && videoRef.current.readyState === videoRef.current.HAVE_ENOUGH_DATA) {
@@ -258,7 +265,7 @@ const App: React.FC = () => {
     }
 
     setAppState(AppState.PROCESSING);
-    setLoadingMessage("Applying Gemini Magic...");
+    setLoadingMessage("Creating your masterpiece...");
     setHasSaved(false);
 
     try {
@@ -600,8 +607,17 @@ const App: React.FC = () => {
           autoPlay
           playsInline
           muted
-          className="w-full h-full object-cover"
+          className={`w-full h-full object-cover ${facingMode === 'user' ? 'scale-x-[-1]' : ''}`}
         />
+
+        <div className="absolute top-4 right-4 z-50">
+          <button
+            onClick={toggleCamera}
+            className="p-3 bg-white/20 backdrop-blur-md rounded-full border-2 border-white/50 shadow-lg active:scale-90 transition-transform"
+          >
+            <RotateCcw size={28} className="text-white" />
+          </button>
+        </div>
 
         {/* Magic Frame Overlay - Adjusted with padding and constraints to prevent cropping */}
         <div className="absolute inset-0 pointer-events-none p-12 md:p-16 flex items-center justify-center overflow-hidden">
