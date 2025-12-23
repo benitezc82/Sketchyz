@@ -459,7 +459,7 @@ const App: React.FC = () => {
       if (navigator.share) {
         await navigator.share({
           title: 'My Sketchyz Masterpiece',
-          text: `Check out this masterpiece I brought to life with Sketchyz! ✨🎨 #sketchyz #${styleName.replace(/\s+/g, '')}\n\nTry 5 free generations yourself at ${window.location.origin}!`,
+          text: `Check out this masterpiece I brought to life with Sketchyz! ✨🎨 #sketchyz #${styleName.replace(/\s+/g, '')}\n\nTry 5 free generations yourself!`,
           url: window.location.href,
           files: [file],
         });
