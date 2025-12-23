@@ -272,9 +272,12 @@ const App: React.FC = () => {
       // Small pause for "Waking up"
       await new Promise(r => setTimeout(r, 1500));
 
-      const subject = drawingSubject || await GeminiService.identifySubject(originalImage!);
+      let subject = drawingSubject || await GeminiService.identifySubject(originalImage!);
+      // Double-check: clean "a" or "an" just in case the model slipped up
+      subject = subject.replace(/^(a|an|the)\s+/i, "");
       setDrawingSubject(subject);
-      setLoadingMessage(`Thinking about your ${subject}...`);
+
+      setLoadingMessage(`I spy with my robot eye... a ${subject}!`);
 
       // Artificial delay to let them read the "Thinking" message
       await new Promise(r => setTimeout(r, 2000));

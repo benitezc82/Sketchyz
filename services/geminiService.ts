@@ -44,7 +44,7 @@ export const identifySubject = async (imageBase64: string): Promise<string> => {
             },
           },
           {
-            text: "Identify the main subject of this child's drawing. Answer in 2-4 simple words (e.g., 'a happy dragon', 'a fast racecar'). Do not add punctuation."
+            text: "Identify the main subject of this child's drawing. Answer in 2-4 simple words (e.g., 'happy dragon', 'racecar'). Do NOT include 'a', 'an', or 'the'. Do not add punctuation."
           },
         ],
       },
