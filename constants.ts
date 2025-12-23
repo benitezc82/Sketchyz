@@ -76,7 +76,7 @@ export const STYLES: StyleOption[] = [
     name: '3D Render',
     icon: '🧊',
     color: 'bg-[#FF66C4]', // Pink
-    description: 'Pixar-style 3D animation render. Disney/Pixar movie still. High-end CGI character design. smooth, cute, expressive, volumetric lighting, redshift, 4k. Looks like a 3D movie frame. 3D solid geometry, depth of field. NOT a 2D drawing, NOT a comic.'
+    description: 'Pixar-style 3D animation render. Disney/Pixar movie still. High-end CGI character design. smooth, cute, expressive, volumetric lighting, redshift, 4k. Looks like a 3D movie frame. 3D solid geometry, depth of field. Subsurface scattering. Solid shapes. NOT a 2D drawing, NOT a comic, NOT a sketch, NOT a pencil drawing. No outlines, no strokes.'
   },
   {
     id: 'watercolor',
@@ -104,7 +104,7 @@ export const STYLES: StyleOption[] = [
     name: 'Hyper Realism',
     icon: '📸',
     color: 'bg-[#2563EB]', // Blue
-    description: 'Photorealistic 8k masterpiece. Highly detailed photography, cinematic lighting, sharp focus, macro texture details, ray tracing, Unreal Engine 5 render. Depth of field, volumetric lighting, HDR. Looks like a real high-end photo.'
+    description: 'Hyper-realistic photography. 8k resolution. Captured with a Canon 5D Mark IV, 85mm lens. Incredible detail, skin texture, pores, realistic lighting shadows. Looks exactly like a real photo. NOT an illustration, NOT a painting, NOT a drawing, NOT a sketch, NOT a 3D render. No cartoon effects, no outlines. True-to-life photography.'
   },
   {
     id: 'lucky',
