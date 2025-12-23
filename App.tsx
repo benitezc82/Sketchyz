@@ -82,6 +82,29 @@ const StyleCharacter: React.FC<{ id: string }> = ({ id }) => {
           <div className="w-8 h-2 bg-black/10 rounded-full"></div>
         </div>
       );
+    case 'sketch':
+      return (
+        <div className="w-20 h-20 bg-white hand-border rounded-lg flex items-center justify-center transform rotate-1">
+          <div className="relative w-12 h-12 flex justify-center transform -rotate-45">
+            <div className="absolute top-0 border-l-[6px] border-r-[6px] border-t-[8px] border-l-transparent border-r-transparent border-t-black z-20"></div>
+            <div className="absolute top-0 border-l-[5px] border-r-[5px] border-t-[7px] border-l-transparent border-r-transparent border-t-[#FFD93D] z-30"></div>
+            <div className="absolute top-[4px] border-l-[2px] border-r-[2px] border-t-[4px] border-l-transparent border-r-transparent border-t-black z-40"></div>
+            <div className="h-full w-3 bg-[#FFD93D] hand-border absolute top-2 rounded-b-sm"></div>
+          </div>
+        </div>
+      );
+    case 'realism':
+      return (
+        <div className="w-20 h-20 bg-white hand-border rounded-xl flex items-center justify-center transform -rotate-2">
+          <Camera size={32} className="text-black fill-[#4DE1C1]" strokeWidth={2.5} />
+        </div>
+      );
+    case 'lucky':
+      return (
+        <div className="w-20 h-20 bg-white hand-border rounded-full flex items-center justify-center transform rotate-6 border-4 border-[#FFD93D] border-dashed">
+          <Sparkles size={32} className="text-[#FF66C4] fill-current" />
+        </div>
+      );
     default:
       return <Star className="text-white" />;
   }
