@@ -114,15 +114,11 @@ export const generateStyledImage = async (
 
   try {
     /*
-       Configuration for Nano Banana Pro (Gemini 3 Pro Image)
-       Model ID: gemini-3-pro-image-preview
-    */
-    /*
-       Configuration for Nano Banana Pro (Gemini 3 Pro Image)
-       Model ID: gemini-3-pro-image-preview
+       Configuration: Switched to Gemini 2.0 Flash (Stable)
+       Reason: Gemini 3 Preview was rejecting requests/outputting text.
     */
     const response = await ai.models.generateContent({
-      model: 'gemini-3-pro-image-preview',
+      model: 'gemini-2.0-flash-exp',
       contents: {
         parts: [
           {
@@ -132,16 +128,12 @@ export const generateStyledImage = async (
             },
           },
           {
-            text: "RENDER STYLE: " + stylePrompt + "\n\nINPUT IMAGE REFERENCE: Use the attached image ONLY for composition and pose. \n\nIMPORTANT: IGNORE the photorealism, texture, and lighting of the input image. You MUST completely re-render the subject in the requested style. If the style is cartoon/3D/drawing, the output must NOT look like a photo."
+            text: "Generate an image based on this input. RENDER STYLE: " + stylePrompt + "\n\nINPUT IMAGE REFERENCE: Use the attached image ONLY for composition and pose. \n\nIMPORTANT: IGNORE the photorealism, texture, and lighting of the input image. You MUST completely re-render the subject in the requested style. If the style is cartoon/3D/drawing, the output must NOT look like a photo."
           },
         ],
       },
       config: {
-        responseMimeType: 'image/jpeg',
-        imageConfig: {
-          aspectRatio: "1:1",
-          imageSize: "1K" // Nano Banana Pro supports native 4K, but we request 1K for speed/stability in preview
-        }
+        responseMimeType: 'image/jpeg'
       }
     });
 
