@@ -271,7 +271,10 @@ const App: React.FC = () => {
       setError("Magic key issue! Please select your key again.");
       setAppState(AppState.WELCOME);
     } else {
-      setError("Oh no! The magic spell fizzled out. Please try again!");
+      // Show actual error for debugging
+      const errorMessage = e?.message || JSON.stringify(e) || "Unknown error";
+      setError(`Oh no! Error: ${errorMessage}`);
+      console.error("Full API Error:", e);
       setAppState(AppState.CAMERA);
     }
   };
@@ -549,6 +552,12 @@ const App: React.FC = () => {
               >
                 Learn about magic keys
               </a>
+              <div className="mt-2 text-[10px] text-red-500 font-mono break-all bg-red-50 p-1 rounded">
+                DEBUG INFO:
+                <br />Key Present: {import.meta.env.VITE_GEMINI_API_KEY ? "YES" : "NO"}
+                <br />Length: {import.meta.env.VITE_GEMINI_API_KEY?.length || 0}
+                <br />Value Start: {import.meta.env.VITE_GEMINI_API_KEY ? import.meta.env.VITE_GEMINI_API_KEY.slice(0, 4) + "..." : "N/A"}
+              </div>
             </div>
             <Button onClick={handleOpenMagicKey} className="w-full text-xl py-5 bg-[#FFD93D] !text-black" icon={<Star size={28} />}>
               Unlock Pro Magic
