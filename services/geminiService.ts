@@ -118,7 +118,7 @@ export const generateStyledImage = async (
        Reason: Gemini 3 Preview was rejecting requests/outputting text.
     */
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash-exp',
+      model: 'gemini-3-pro-image-preview',
       contents: {
         parts: [
           {
@@ -133,7 +133,10 @@ export const generateStyledImage = async (
         ],
       },
       config: {
-        responseMimeType: 'image/jpeg'
+        imageConfig: {
+          aspectRatio: "1:1",
+          imageSize: "1K"
+        }
       }
     });
 
