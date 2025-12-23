@@ -290,7 +290,16 @@ const App: React.FC = () => {
       setCurrentPrompt(promptToUse);
       setSelectedStyle(style);
 
-      setLoadingMessage(`Painting your masterpiece...`);
+      // Dynamic fun messages logic
+      const funPhrases = [
+        `Teaching the pixels how to draw your ${subject}...`,
+        `Mixing magic colors for your ${subject}...`,
+        `Sprinkling creative dust on your ${subject}...`,
+        `Dreaming up a wild ${subject} for you...`,
+        `Asking the art wizard about your ${subject}...`,
+      ];
+      const randomPhrase = funPhrases[Math.floor(Math.random() * funPhrases.length)];
+      setLoadingMessage(randomPhrase);
 
       // Allow the painting message to be seen before the heavy lifting starts/finishes
       await new Promise(r => setTimeout(r, 1500));
