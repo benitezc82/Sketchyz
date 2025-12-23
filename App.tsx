@@ -93,7 +93,7 @@ const App: React.FC = () => {
   const [generationCount, setGenerationCount] = useState<number>(() => {
     return parseInt(localStorage.getItem('sketchyz_gen_count') || '0');
   });
-  const MAX_GENERATIONS = 10;
+  const MAX_GENERATIONS = 20;
 
   useEffect(() => {
     localStorage.setItem('sketchyz_gen_count', generationCount.toString());
