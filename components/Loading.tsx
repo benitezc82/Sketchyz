@@ -21,12 +21,26 @@ export const Loading: React.FC<LoadingProps> = ({ message }) => {
           <div className="relative animate-wiggle-slow">
             <div className="relative transform rotate-[15deg]">
               {/* Simplified Pencil for Icon */}
-              <div className="w-8 h-24 md:w-10 md:h-28 flex flex-col drop-shadow-lg">
+              <div className="w-10 h-28 flex flex-col drop-shadow-lg relative">
+                {/* Eraser */}
                 <div className="h-[15%] w-full bg-[#FF66C4] rounded-t-lg border-[3px] border-[#1a1a1a] border-b-0"></div>
-                <div className="h-[10%] w-full bg-gray-200 border-[3px] border-[#1a1a1a] border-b-0"></div>
-                <div className="h-[55%] w-full bg-[#4DE1C1] border-[3px] border-[#1a1a1a] border-b-0"></div>
-                <div className="h-[20%] w-full bg-[#FFD93D] border-[3px] border-[#1a1a1a] rounded-b-full relative overflow-hidden">
-                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-4 bg-[#1a1a1a] rounded-full translate-y-1"></div>
+                {/* Metal */}
+                <div className="h-[10%] w-full bg-gray-300 border-[3px] border-[#1a1a1a] border-b-0 flex justify-center gap-[2px]">
+                  <div className="w-[2px] h-full bg-black/10"></div>
+                  <div className="w-[2px] h-full bg-black/10"></div>
+                </div>
+                {/* Body */}
+                <div className="h-[55%] w-full bg-[#4DE1C1] border-[3px] border-[#1a1a1a] border-b-0 flex justify-center">
+                  <div className="w-[30%] h-full border-x-[2px] border-black/5"></div>
+                </div>
+                {/* Tip Container - Sharp! */}
+                <div className="h-[20%] w-full relative flex justify-center">
+                  {/* 1. Outline (Calculated for w-10 = 40px width -> 20px borders) */}
+                  <div className="absolute top-0 border-l-[20px] border-r-[20px] border-t-[24px] border-l-transparent border-r-transparent border-t-[#1a1a1a]"></div>
+                  {/* 2. Wood Fill */}
+                  <div className="absolute top-0 border-l-[17px] border-r-[17px] border-t-[21px] border-l-transparent border-r-transparent border-t-[#FFD93D]"></div>
+                  {/* 3. Graphite */}
+                  <div className="absolute top-[14px] border-l-[6px] border-r-[6px] border-t-[8px] border-l-transparent border-r-transparent border-t-[#1a1a1a]"></div>
                 </div>
               </div>
             </div>
