@@ -621,7 +621,7 @@ const App: React.FC = () => {
       </div>
 
       {error && (
-        <div className="mt-8 bg-[#FF6B6B] text-white p-4 rounded-xl font-bold hand-border hand-shadow-sm text-center">
+        <div className="mt-8 bg-purple-500 text-white p-4 rounded-xl font-bold hand-border hand-shadow-sm text-center animate-bounce">
           {error}
         </div>
       )}

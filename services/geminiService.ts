@@ -113,10 +113,8 @@ export const generateStyledImage = async (
   const ai = new GoogleGenAI({ apiKey: getApiKey() });
 
   try {
-    /*
-       Configuration: Switched to Gemini 2.0 Flash (Stable)
-       Reason: Gemini 3 Preview was rejecting requests/outputting text.
-    */
+    // ATTEMPT 1: Gemini 3 Pro Image (The "Latest")
+    console.log("🎨 Attempting generation with Gemini 3 Pro Image...");
     const response = await ai.models.generateContent({
       model: 'gemini-3-pro-image-preview',
       contents: {
@@ -140,28 +138,57 @@ export const generateStyledImage = async (
       }
     });
 
-    console.log("📸 API RESPONSE:", response); // Log the full object
+    console.log("📸 API RESPONSE (G3):", response);
 
-    // Check candidates
+    // Validate G3 response
     const candidate = response.candidates?.[0];
-    if (!candidate) throw new Error("No candidates returned");
-
-    for (const part of candidate.content?.parts || []) {
-      // Check for image
-      if (part.inlineData && part.inlineData.data) {
-        console.log("🎉 Image found!");
-        return `data:image/png;base64,${part.inlineData.data}`;
-      }
-      // Check for refusal/text
-      if (part.text) {
-        console.warn("⚠️ Model returned text instead of image:", part.text);
-      }
+    if (candidate?.content?.parts?.[0]?.inlineData?.data) {
+      return `data:image/png;base64,${candidate.content.parts[0].inlineData.data}`;
     }
+    throw new Error("Gemini 3 returned no image.");
 
-    throw new Error("Model returned text/data but NO image. Check console for '⚠️ Model returned text'.");
-  } catch (error) {
-    console.error("Error generating image:", error);
-    throw error;
+  } catch (g3Error) {
+    console.warn("⚠️ Gemini 3 Failed, falling back to Gemini 2.0 Flash:", g3Error);
+
+    // ATTEMPT 2: Gemini 2.0 Flash (Stable Fallback)
+    try {
+      const response = await ai.models.generateContent({
+        model: 'gemini-2.0-flash-exp',
+        contents: {
+          parts: [
+            {
+              inlineData: {
+                data: cleanBase64(originalImageBase64),
+                mimeType: getMimeType(originalImageBase64),
+              },
+            },
+            {
+              text: "Generate an image based on this input. RENDER STYLE: " + stylePrompt + "\n\nINPUT IMAGE REFERENCE: Use the attached image ONLY for composition and pose. \n\nIMPORTANT: IGNORE the photorealism, texture, and lighting of the input image. You MUST completely re-render the subject in the requested style. If the style is cartoon/3D/drawing, the output must NOT look like a photo."
+            },
+          ],
+        },
+        config: {
+          responseMimeType: 'image/jpeg'
+        }
+      });
+
+      console.log("📸 API RESPONSE (G2):", response);
+      const candidate = response.candidates?.[0];
+      if (!candidate) throw new Error("No candidates returned from fallback.");
+
+      for (const part of candidate.content?.parts || []) {
+        if (part.inlineData && part.inlineData.data) {
+          return `data:image/png;base64,${part.inlineData.data}`;
+        }
+      }
+      throw new Error("Fallback model returned text/data but NO image.");
+
+    } catch (fallbackError) {
+      console.error("Critical Failure:", fallbackError);
+      // Throw the original error if it was permission related, or the fallback error?
+      // Let's throw a combined message so the user sees both if needed.
+      throw new Error(`Generation failed. Primary: ${(g3Error as any).message}. Fallback: ${(fallbackError as any).message}`);
+    }
   }
 };
 
