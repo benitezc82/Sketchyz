@@ -12,97 +12,66 @@ const StyleCharacter: React.FC<{ id: string }> = ({ id }) => {
   switch (id) {
     case 'comic':
       return (
-        <div className="relative w-20 h-20 flex items-center justify-center transform rotate-6">
-          <div className="absolute inset-0 bg-white hand-border [clip-path:polygon(50%_0%,_65%_35%,_100%_35%,_75%_60%,_85%_95%,_50%_75%,_15%_95%,_25%_60%,_0%_35%,_35%_35%)] scale-110"></div>
-          <div className="absolute inset-0 bg-black scale-95 [clip-path:polygon(50%_0%,_65%_35%,_100%_35%,_75%_60%,_85%_95%,_50%_75%,_15%_95%,_25%_60%,_0%_35%,_35%_35%)]"></div>
-          <Zap size={32} className="text-[#FFD93D] fill-current relative z-10" />
+        <div className="relative w-20 h-20 flex items-center justify-center transform rotate-3">
+          {/* Black Star Background */}
+          <Star size={72} className="text-black fill-black absolute" strokeWidth={0} />
+          {/* White Outline/Offset */}
+          <Star size={72} className="text-white absolute translate-x-[-2px] translate-y-[-2px]" strokeWidth={2} />
+          {/* Yellow Bolt */}
+          <Zap size={32} className="text-[#FFD93D] fill-[#FFD93D] relative z-10 transform -rotate-12" strokeWidth={2} />
         </div>
       );
-    case 'cartoon':
+    case 'cartoon': // 3D Render
       return (
-        <div className="w-20 h-20 bg-white hand-border rounded-full flex flex-col items-center justify-center transform -rotate-3 p-1">
-          <div className="flex gap-3 mb-1">
-            <div className="w-3 h-3 rounded-full bg-black"></div>
-            <div className="w-3 h-3 rounded-full bg-black"></div>
-          </div>
-          <div className="w-6 h-3 border-b-4 border-black rounded-full"></div>
-        </div>
-      );
-    case 'toy3d':
-      return (
-        <div className="w-20 h-20 bg-white hand-border rounded-2xl flex flex-col items-center justify-center transform rotate-2">
-          <div className="w-12 h-10 flex flex-col items-center justify-center gap-1">
+        <div className="w-20 h-20 bg-white hand-border rounded-full flex items-center justify-center transform -rotate-2">
+          <div className="flex flex-col items-center gap-2">
             <div className="flex gap-4">
-              <div className="w-2 h-2 bg-black rounded-full"></div>
-              <div className="w-2 h-2 bg-black rounded-full"></div>
+              <div className="w-3 h-3 bg-black rounded-full"></div>
+              <div className="w-3 h-3 bg-black rounded-full"></div>
             </div>
-            <div className="w-8 h-1 bg-black rounded-full opacity-30"></div>
-          </div>
-          <div className="w-1 h-3 bg-black rounded-t-full -mt-1"></div>
-        </div>
-      );
-    case 'neon':
-      return (
-        <div className="relative w-20 h-20 flex items-center justify-center">
-          <div className="absolute scale-125">
-            <Star size={48} className="text-white fill-white" />
-          </div>
-          <Star size={48} className="text-black relative z-10" strokeWidth={3} />
-          <div className="absolute top-0 right-0">
-            <Sparkles size={20} className="text-white" />
+            <div className="w-6 h-3 border-b-4 border-black rounded-full"></div>
           </div>
         </div>
       );
     case 'watercolor':
       return (
-        <div className="w-20 h-20 bg-white hand-border rounded-full flex items-center justify-center transform rotate-12 relative overflow-hidden">
-          <div className="absolute top-2 left-4 w-4 h-4 rounded-full bg-[#FF6B6B]"></div>
-          <div className="absolute bottom-4 right-4 w-5 h-5 rounded-full bg-[#4DE1C1]"></div>
-          <div className="absolute top-6 right-3 w-3 h-3 rounded-full bg-[#FFD93D]"></div>
-          <Pencil size={32} className="text-black relative z-10 transform -rotate-45" />
-        </div>
-      );
-    case 'pixel':
-      return (
-        <div className="w-20 h-20 bg-white hand-border rounded-lg flex flex-col items-center justify-center p-1">
-          <div className="grid grid-cols-3 gap-1">
-            {[...Array(9)].map((_, i) => (
-              <div key={i} className={`w-4 h-4 ${i === 4 ? 'bg-[#FF66C4] hand-border' : 'bg-black/5'}`}></div>
-            ))}
-          </div>
-        </div>
-      );
-    case 'clay':
-      return (
-        <div className="w-20 h-20 bg-white hand-border rounded-[35%] flex flex-col items-center justify-center transform -rotate-6">
-          <div className="flex gap-2 mb-1">
-            <div className="w-2 h-2 bg-black rounded-full"></div>
-            <div className="w-2 h-2 bg-black rounded-full"></div>
-          </div>
-          <div className="w-8 h-2 bg-black/10 rounded-full"></div>
+        <div className="w-20 h-20 bg-white hand-border rounded-full flex items-center justify-center transform rotate-2">
+          <Palette size={40} className="text-[#1a1a1a]" strokeWidth={2} />
+          <div className="absolute top-4 right-5 w-3 h-3 bg-[#FF6B6B] rounded-full border border-black"></div>
+          <div className="absolute bottom-5 left-5 w-3 h-3 bg-[#4DE1C1] rounded-full border border-black"></div>
         </div>
       );
     case 'sketch':
       return (
-        <div className="w-20 h-20 bg-white hand-border rounded-lg flex items-center justify-center transform rotate-1">
-          <div className="relative w-12 h-12 flex justify-center transform -rotate-45">
-            <div className="absolute top-0 border-l-[6px] border-r-[6px] border-t-[8px] border-l-transparent border-r-transparent border-t-black z-20"></div>
-            <div className="absolute top-0 border-l-[5px] border-r-[5px] border-t-[7px] border-l-transparent border-r-transparent border-t-[#FFD93D] z-30"></div>
-            <div className="absolute top-[4px] border-l-[2px] border-r-[2px] border-t-[4px] border-l-transparent border-r-transparent border-t-black z-40"></div>
-            <div className="h-full w-3 bg-[#FFD93D] hand-border absolute top-2 rounded-b-sm"></div>
+        <div className="w-20 h-20 bg-white hand-border rounded-2xl flex items-center justify-center transform rotate-1">
+          <Pencil size={44} className="text-[#1a1a1a] fill-[#FFD93D]" strokeWidth={2} />
+        </div>
+      );
+    case 'clay':
+    case 'toy3d': // Claymation
+      return (
+        <div className="w-20 h-20 bg-white hand-border rounded-[30px] flex items-center justify-center transform -rotate-1">
+          <div className="flex flex-col items-center gap-1">
+            <div className="flex gap-3">
+              <div className="w-2 h-2 bg-black rounded-full"></div>
+              <div className="w-2 h-2 bg-black rounded-full"></div>
+            </div>
+            <div className="w-6 h-2 bg-gray-200 rounded-full mt-2"></div>
           </div>
         </div>
       );
     case 'realism':
+    case 'pixel': // Fallback for Pixel to Camera (or add specific pixel icon if needed, but Realism was requested)
       return (
-        <div className="w-20 h-20 bg-white hand-border rounded-xl flex items-center justify-center transform -rotate-2">
-          <Camera size={32} className="text-black fill-[#4DE1C1]" strokeWidth={2.5} />
+        <div className="w-20 h-20 bg-white hand-border rounded-2xl flex items-center justify-center transform -rotate-2">
+          <Camera size={40} className="text-[#1a1a1a] fill-[#4DE1C1]" strokeWidth={2} />
         </div>
       );
     case 'lucky':
+    case 'neon': // Fallback for Neon to Lucky
       return (
-        <div className="w-20 h-20 bg-white hand-border rounded-full flex items-center justify-center transform rotate-6 border-4 border-[#FFD93D] border-dashed">
-          <Sparkles size={32} className="text-[#FF66C4] fill-current" />
+        <div className="w-20 h-20 bg-white border-4 border-[#FFD93D] border-dashed rounded-full flex items-center justify-center transform rotate-3">
+          <Sparkles size={40} className="text-[#FF66C4] fill-[#FF66C4]" />
         </div>
       );
     default:
