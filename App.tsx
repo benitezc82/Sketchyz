@@ -258,7 +258,7 @@ const App: React.FC = () => {
     }
 
     setAppState(AppState.PROCESSING);
-    setLoadingMessage("Waking up the Nano Banana Brain...");
+    setLoadingMessage("Applying Gemini Magic...");
     setHasSaved(false);
 
     try {

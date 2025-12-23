@@ -60,10 +60,10 @@ export const STYLES: StyleOption[] = [
   },
   {
     id: 'cartoon',
-    name: '3D Cartoon',
-    icon: '🦊',
+    name: '3D Render',
+    icon: '🧊',
     color: 'bg-[#FF66C4]', // Pink
-    description: 'High-fidelity 3D CGI character render. Pixar/Disney animation style. Volumetric lighting, subsurface scattering, 3D plastic/clay materials, ambient occlusion. Soft edges, rounded shapes, exaggerated features. Looks like a 3D movie frame, NOT a 2D drawing, NOT a real photo.'
+    description: 'High-fidelity 3D CGI render. Octane Render, Unreal Engine 5 style. Volumetric lighting, 3D plastic/glossy materials, ambient occlusion. Soft edges, rounded shapes. Looks like a high-end 3D art piece, NOT a 2D drawing, NOT a comic.'
   },
   {
     id: 'watercolor',
