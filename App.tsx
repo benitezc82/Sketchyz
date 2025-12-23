@@ -93,7 +93,8 @@ const App: React.FC = () => {
   const [generationCount, setGenerationCount] = useState<number>(() => {
     return parseInt(localStorage.getItem('sketchyz_gen_count') || '0');
   });
-  const MAX_GENERATIONS = 20;
+  const MAX_GENERATIONS = 20; // Increased limit
+  const [refinementInput, setRefinementInput] = useState(""); // User's additive details
 
   useEffect(() => {
     localStorage.setItem('sketchyz_gen_count', generationCount.toString());
@@ -384,7 +385,8 @@ const App: React.FC = () => {
     setHasSaved(false);
 
     try {
-      const generatedImageBase64 = await GeminiService.generateStyledImage(inputImage, currentPrompt, selectedStyle?.id);
+      const effectivePrompt = refinementInput ? `${currentPrompt} ${refinementInput}` : currentPrompt;
+      const generatedImageBase64 = await GeminiService.generateStyledImage(inputImage, effectivePrompt, selectedStyle?.id);
 
       setResult(prev => prev ? {
         ...prev,
@@ -405,6 +407,7 @@ const App: React.FC = () => {
     setSelectedStyle(null);
     setDrawingSubject("");
     setUserContextInput("");
+    setRefinementInput("");
     setHasSaved(false);
   };
 
@@ -863,8 +866,9 @@ const App: React.FC = () => {
           <textarea
             className="flex-1 bg-gray-100 border-2 border-black rounded-xl p-3 font-bold text-sm resize-none focus:outline-none focus:border-[#FF66C4] text-black"
             rows={2}
-            value={currentPrompt}
-            onChange={(e) => setCurrentPrompt(e.target.value)}
+            value={refinementInput}
+            placeholder="Add extra details here (e.g. 'add a top hat')..."
+            onChange={(e) => setRefinementInput(e.target.value)}
           />
           <Button
             onClick={handleRegenerate}
