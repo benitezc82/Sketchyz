@@ -93,7 +93,7 @@ const App: React.FC = () => {
   const [generationCount, setGenerationCount] = useState<number>(() => {
     return parseInt(localStorage.getItem('sketchyz_gen_count') || '0');
   });
-  const MAX_GENERATIONS = 5;
+  const MAX_GENERATIONS = 10;
 
   useEffect(() => {
     localStorage.setItem('sketchyz_gen_count', generationCount.toString());
@@ -292,7 +292,7 @@ const App: React.FC = () => {
     setSelectedStyle(style);
 
     if (generationCount >= MAX_GENERATIONS) {
-      alert("You've used all 5 free generations! Share the app to unlock more (just kidding, that's the limit for now!).");
+      alert(`You've used all ${MAX_GENERATIONS} free generations! Share the app to unlock more (just kidding, that's the limit for now!).`);
       return;
     }
 
@@ -459,7 +459,7 @@ const App: React.FC = () => {
       if (navigator.share) {
         await navigator.share({
           title: 'My Sketchyz Masterpiece',
-          text: `Check out this masterpiece I brought to life with Sketchyz! ✨🎨 #sketchyz #${styleName.replace(/\s+/g, '')}\n\nTry 5 free generations yourself!`,
+          text: `Check out this masterpiece I brought to life with Sketchyz! ✨🎨 #sketchyz #${styleName.replace(/\s+/g, '')}\n\nTry ${MAX_GENERATIONS} free generations yourself!`,
           url: window.location.href,
           files: [file],
         });
@@ -732,9 +732,7 @@ const App: React.FC = () => {
         <div className="inline-block bg-[#FFD93D] px-6 py-3 rounded-2xl hand-border hand-shadow-sm transform -rotate-1 mb-4">
           <h2 className="text-3xl font-black text-[#1a1a1a] font-logo lowercase">Pick a Magic Style!</h2>
         </div>
-        <p className="text-xl font-bold text-gray-500 bg-white/50 inline-block px-4 py-1 rounded-full border-2 border-gray-200">
-          I see... <span className="text-black">{drawingSubject}!</span>
-        </p>
+
       </div>
 
       <div className="flex-1 overflow-y-auto p-6">
