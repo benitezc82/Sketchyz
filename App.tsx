@@ -273,8 +273,8 @@ const App: React.FC = () => {
       await new Promise(r => setTimeout(r, 1500));
 
       let subject = drawingSubject || await GeminiService.identifySubject(originalImage!);
-      // Double-check: clean "a" or "an" just in case the model slipped up
-      subject = subject.replace(/^(a|an|the)\s+/i, "");
+      // Aggressively clean "a", "an", "the" from the start, case-insensitive
+      subject = subject.replace(/^(a|an|the)\s+/i, "").toLowerCase();
       setDrawingSubject(subject);
 
       setLoadingMessage(`I spy with my robot eye... a ${subject}!`);
@@ -295,11 +295,13 @@ const App: React.FC = () => {
 
       // Dynamic fun messages logic
       const funPhrases = [
-        `Teaching the pixels to draw your ${subject}...`,
+        `Teaching the pixels how to draw your ${subject}...`,
         `Mixing up magic colors for your ${subject}!`,
         `Sprinkling creative dust on your ${subject}...`,
         `Dreaming up a wild ${subject} for you...`,
         `Asking the art wizard about your ${subject}!`,
+        `Waking up the tiny robots to paint your ${subject}...`,
+        `Putting a magic spell on your ${subject}...`,
       ];
       const randomPhrase = funPhrases[Math.floor(Math.random() * funPhrases.length)];
       setLoadingMessage(randomPhrase);
