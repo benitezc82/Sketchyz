@@ -333,7 +333,7 @@ const App: React.FC = () => {
       // Allow the painting message to be seen before the heavy lifting starts/finishes
       await new Promise(r => setTimeout(r, 1500));
 
-      const styledImage = await GeminiService.generateStyledImage(originalImage!, promptToUse);
+      const styledImage = await GeminiService.generateStyledImage(originalImage!, promptToUse, style.id);
       setGenerationCount(prev => prev + 1);
 
       setResult({
@@ -384,7 +384,7 @@ const App: React.FC = () => {
     setHasSaved(false);
 
     try {
-      const generatedImageBase64 = await GeminiService.generateStyledImage(inputImage, currentPrompt);
+      const generatedImageBase64 = await GeminiService.generateStyledImage(inputImage, currentPrompt, selectedStyle?.id);
 
       setResult(prev => prev ? {
         ...prev,

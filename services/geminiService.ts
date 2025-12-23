@@ -109,9 +109,17 @@ export const getBrainResponse = async (
  */
 export const generateStyledImage = async (
   originalImageBase64: string,
-  stylePrompt: string
+  stylePrompt: string,
+  styleId?: string
 ): Promise<string> => {
   const ai = new GoogleGenAI({ apiKey: getApiKey() });
+
+  // Conditional System Instruction based on style
+  let systemConstraint = "\n\nIMPORTANT: IGNORE the photorealism, texture, and lighting of the input image. You MUST completely re-render the subject in the requested style. If the style is cartoon/3D/drawing, the output must NOT look like a photo.";
+
+  if (styleId === 'realism') {
+    systemConstraint = "\n\nIMPORTANT: PRESERVE and ENHANCE the photorealism. Do NOT turn this into a drawing or painting. Output must look like a high-end RAW photograph taken with a DSLR camera. Improve texture, lighting, and detail to 8k quality.";
+  }
 
   try {
     // ATTEMPT 1: Gemini 3 Pro Image (The "Latest")
@@ -127,7 +135,7 @@ export const generateStyledImage = async (
             },
           },
           {
-            text: "Generate an image based on this input. RENDER STYLE: " + stylePrompt + "\n\nINPUT IMAGE REFERENCE: Use the attached image ONLY for composition and pose. \n\nIMPORTANT: IGNORE the photorealism, texture, and lighting of the input image. You MUST completely re-render the subject in the requested style. If the style is cartoon/3D/drawing, the output must NOT look like a photo."
+            text: "Generate an image based on this input. RENDER STYLE: " + stylePrompt + "\n\nINPUT IMAGE REFERENCE: Use the attached image ONLY for composition and pose. " + systemConstraint
           },
         ],
       },
@@ -164,7 +172,7 @@ export const generateStyledImage = async (
               },
             },
             {
-              text: "Generate an image based on this input. RENDER STYLE: " + stylePrompt + "\n\nINPUT IMAGE REFERENCE: Use the attached image ONLY for composition and pose. \n\nIMPORTANT: IGNORE the photorealism, texture, and lighting of the input image. You MUST completely re-render the subject in the requested style. If the style is cartoon/3D/drawing, the output must NOT look like a photo."
+              text: "Generate an image based on this input. RENDER STYLE: " + stylePrompt + "\n\nINPUT IMAGE REFERENCE: Use the attached image ONLY for composition and pose. " + systemConstraint
             },
           ],
         },
