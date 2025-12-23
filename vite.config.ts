@@ -14,9 +14,15 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [react()],
     define: {
-      // Map the system/Vercel env var (GEMINI_API_KEY) to the Vite-compatible connection string
-      // This ensures we don't rely on a hardcoded, leaked key.
-      'import.meta.env.VITE_GEMINI_API_KEY': JSON.stringify(process.env.GEMINI_API_KEY || env.GEMINI_API_KEY || "")
+      // Robustly load the key from any possible source (Vercel System Env or .env file)
+      // Checks: VITE_ prefixed (Standard), Non-prefixed (User set), then local env variants.
+      'import.meta.env.VITE_GEMINI_API_KEY': JSON.stringify(
+        process.env.VITE_GEMINI_API_KEY ||
+        process.env.GEMINI_API_KEY ||
+        env.VITE_GEMINI_API_KEY ||
+        env.GEMINI_API_KEY ||
+        ""
+      )
     },
     resolve: {
       alias: {
