@@ -22,6 +22,7 @@ export interface StyleOption {
 export interface BrainResponse {
   style_prompt?: string;
   kid_message?: string;
+  loading_message?: string;
 }
 
 export interface GeneratedResult {

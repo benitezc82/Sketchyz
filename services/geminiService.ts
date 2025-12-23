@@ -86,6 +86,7 @@ export const getBrainResponse = async (
           properties: {
             style_prompt: { type: Type.STRING },
             kid_message: { type: Type.STRING },
+            loading_message: { type: Type.STRING },
           }
         }
       },

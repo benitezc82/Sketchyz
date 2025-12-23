@@ -326,16 +326,9 @@ const App: React.FC = () => {
       setSelectedStyle(style);
 
       // Dynamic fun messages logic - Pure Magic & Art!
-      const funPhrases = [
-        `Mixing up magic colors for your ${subject}!`,
-        `Sprinkling creative dust on your ${subject}...`,
-        `Dreaming up a wild ${subject} for you...`,
-        `Asking the art wizard about your ${subject}!`,
-        `Putting a magic spell on your ${subject}...`,
-        `Painting your ${subject} with starlight...`,
-      ];
-      const randomPhrase = funPhrases[Math.floor(Math.random() * funPhrases.length)];
-      setLoadingMessage(randomPhrase);
+      // Dynamic fun messages logic - Smart AI Brain
+      const smartLoadingMessage = brainResponse.loading_message || `Creating your ${style.name} masterpiece...`;
+      setLoadingMessage(smartLoadingMessage);
 
       // Allow the painting message to be seen before the heavy lifting starts/finishes
       await new Promise(r => setTimeout(r, 1500));
@@ -466,7 +459,7 @@ const App: React.FC = () => {
       if (navigator.share) {
         await navigator.share({
           title: 'My Sketchyz Masterpiece',
-          text: `Check out this masterpiece I brought to life with Sketchyz! ✨🎨 #sketchyz #${styleName.replace(/\s+/g, '')}\n\nTry 5 free generations yourself!`,
+          text: `Check out this masterpiece I brought to life with Sketchyz! ✨🎨 #sketchyz #${styleName.replace(/\s+/g, '')}\n\nTry 5 free generations yourself at ${window.location.host}!`,
           files: [file],
         });
       } else {
