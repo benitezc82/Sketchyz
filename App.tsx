@@ -619,12 +619,12 @@ const App: React.FC = () => {
           className={`w-full h-full object-cover ${facingMode === 'user' ? 'scale-x-[-1]' : ''}`}
         />
 
-        <div className="absolute top-4 right-4 z-50">
+        <div className="absolute top-8 right-8 z-50">
           <button
             onClick={toggleCamera}
-            className="p-3 bg-white/20 backdrop-blur-md rounded-full border-2 border-white/50 shadow-lg active:scale-90 transition-transform"
+            className="p-4 bg-[#FFD93D] rounded-full border-4 border-black shadow-[4px_4px_0_rgba(0,0,0,1)] active:shadow-none active:translate-x-1 active:translate-y-1 transition-all"
           >
-            <RotateCcw size={28} className="text-white" />
+            <RotateCcw size={32} className="text-black" strokeWidth={3} />
           </button>
         </div>
 
