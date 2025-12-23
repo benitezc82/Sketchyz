@@ -277,7 +277,7 @@ const App: React.FC = () => {
       subject = subject.replace(/^(a|an|the)\s+/i, "").toLowerCase();
       setDrawingSubject(subject);
 
-      setLoadingMessage(`I spy with my robot eye... a ${subject}!`);
+      setLoadingMessage(`Dreaming up a ${subject}...`);
 
       // Artificial delay to let them read the "Thinking" message
       await new Promise(r => setTimeout(r, 2000));
@@ -293,15 +293,14 @@ const App: React.FC = () => {
       setCurrentPrompt(promptToUse);
       setSelectedStyle(style);
 
-      // Dynamic fun messages logic
+      // Dynamic fun messages logic - Pure Magic & Art!
       const funPhrases = [
-        `Teaching the pixels how to draw your ${subject}...`,
         `Mixing up magic colors for your ${subject}!`,
         `Sprinkling creative dust on your ${subject}...`,
         `Dreaming up a wild ${subject} for you...`,
         `Asking the art wizard about your ${subject}!`,
-        `Waking up the tiny robots to paint your ${subject}...`,
         `Putting a magic spell on your ${subject}...`,
+        `Painting your ${subject} with starlight...`,
       ];
       const randomPhrase = funPhrases[Math.floor(Math.random() * funPhrases.length)];
       setLoadingMessage(randomPhrase);
