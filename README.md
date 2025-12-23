@@ -60,7 +60,9 @@ To add a new style, just copy one of the blocks and change the details:
 - **Icons:** We use [Lucide React](https://lucide.dev/icons). Import new ones at the top of the file.
 - **Fonts:** Changed in `src/index.html` (currently using "Fredoka").
 
+
 ### 4. Deployment
-Ready to go live?
-1. run `npm run build`
-2. Upload the `dist` folder to Netlify, Vercel, or Firebase Hosting.
+**Deployed on Vercel** 🚀
+1. Push changes to GitHub.
+2. Vercel updates automatically.
+
