@@ -20,35 +20,31 @@ export const Loading: React.FC<LoadingProps> = ({ message }) => {
           {/* Animated Pencil */}
           <div className="relative animate-wiggle-slow">
             <div className="relative transform rotate-[15deg]">
-              {/* Wizard Character */}
-              <div className="relative w-28 h-32 flex flex-col items-center">
-                {/* Hat */}
-                <div className="relative z-30 flex flex-col items-center -mb-2 animate-bounce-slight">
-                  {/* Cone */}
-                  <div className="w-0 h-0 border-l-[26px] border-r-[26px] border-b-[44px] border-l-transparent border-r-transparent border-b-[#A855F7] drop-shadow-sm relative">
-                    <Star size={10} className="absolute top-4 -left-1 text-[#FFD93D] fill-current animate-pulse" />
-                    <Star size={8} className="absolute top-2 right-0 text-[#FFD93D] fill-current" />
-                  </div>
-                  {/* Brim */}
-                  <div className="w-22 h-3.5 bg-[#9333EA] rounded-full border-2 border-[#1a1a1a] transform -rotate-2 shadow-sm"></div>
+              {/* Welcome Screen Pencil (Scaled) */}
+              <div className="relative w-14 h-36 transform scale-90 rotate-[15deg] drop-shadow-xl">
+                <div className="h-[15%] w-full bg-[#FF66C4] rounded-t-xl border-4 border-black border-b-0"></div>
+                <div className="h-[10%] w-full bg-gray-300 border-4 border-black border-b-0 flex gap-1 justify-center items-center">
+                  <div className="w-1 h-full bg-black/10"></div>
+                  <div className="w-1 h-full bg-black/10"></div>
+                </div>
+                <div className="h-[55%] w-full bg-[#4DE1C1] border-4 border-black border-b-0 flex items-center justify-center">
+                  <div className="w-1/3 h-full border-x-4 border-black/10"></div>
+                </div>
+                <div className="h-[20%] w-full relative flex justify-center">
+                  {/* 1. Black Outline */}
+                  <div className="absolute top-0 border-l-[28px] border-r-[28px] border-t-[36px] border-l-transparent border-r-transparent border-t-black"></div>
+                  {/* 2. Yellow Wood */}
+                  <div className="absolute top-0 border-l-[24px] border-r-[24px] border-t-[32px] border-l-transparent border-r-transparent border-t-[#FFD93D]"></div>
+                  {/* 3. Graphite Tip */}
+                  <div className="absolute top-[22px] border-l-[8px] border-r-[8px] border-t-[10px] border-l-transparent border-r-transparent border-t-black"></div>
                 </div>
 
-                {/* Head */}
-                <div className="relative z-20 w-16 h-16 bg-[#FFD93D] rounded-full border-[3px] border-[#1a1a1a] flex items-center justify-center shadow-lg -mt-1">
-                  {/* Eyes */}
-                  <div className="flex gap-2.5 mt-2 z-10">
-                    <div className="w-1.5 h-1.5 bg-[#1a1a1a] rounded-full"></div>
-                    <div className="w-1.5 h-1.5 bg-[#1a1a1a] rounded-full"></div>
-                  </div>
-                  {/* Beard */}
-                  <div className="absolute bottom-0 w-full h-[50%] bg-white rounded-b-full rounded-t-[50%] border-t-2 border-gray-100/20"></div>
+                {/* Integrated Magic Dust */}
+                <div className="absolute top-1/4 -right-8 text-[#FFD93D] animate-spin">
+                  <Star size={32} fill="#FFD93D" strokeWidth={3} className="text-black" />
                 </div>
-
-                {/* Wand Hand */}
-                <div className="absolute right-0 top-14 z-40 animate-wiggle-fast origin-bottom-left">
-                  <div className="w-1.5 h-14 bg-[#8B4513] border border-[#1a1a1a] rounded-full transform rotate-12 relative">
-                    <Sparkles size={28} className="absolute -top-4 -right-2 text-[#4DE1C1] fill-current animate-spin-slow" />
-                  </div>
+                <div className="absolute bottom-1/4 -left-6 text-[#FF66C4] animate-bounce">
+                  <Sparkles size={24} fill="#FF66C4" strokeWidth={3} className="text-black" />
                 </div>
               </div>
             </div>
