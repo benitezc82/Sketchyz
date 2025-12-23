@@ -72,7 +72,7 @@ export const STYLES: StyleOption[] = [
     description: 'Professional comic book art, Marvel/DC style. Dynamic action framing, bold ink outlines, cross-hatching, dramatic chiaroscuro lighting, vibrant CMYK coloring, Ben-Day dots texture. Masterpiece quality, detailed background, heroic proportions, high contrast.'
   },
   {
-    id: 'cartoon',
+    id: 'toy3d',
     name: '3D Render',
     icon: '🧊',
     color: 'bg-[#FF66C4]', // Pink

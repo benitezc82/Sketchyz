@@ -20,27 +20,35 @@ export const Loading: React.FC<LoadingProps> = ({ message }) => {
           {/* Animated Pencil */}
           <div className="relative animate-wiggle-slow">
             <div className="relative transform rotate-[15deg]">
-              {/* Simplified Pencil for Icon */}
-              <div className="w-10 h-28 flex flex-col drop-shadow-lg relative">
-                {/* Eraser */}
-                <div className="h-[15%] w-full bg-[#FF66C4] rounded-t-lg border-[3px] border-[#1a1a1a] border-b-0"></div>
-                {/* Metal */}
-                <div className="h-[10%] w-full bg-gray-300 border-[3px] border-[#1a1a1a] border-b-0 flex justify-center gap-[2px]">
-                  <div className="w-[2px] h-full bg-black/10"></div>
-                  <div className="w-[2px] h-full bg-black/10"></div>
+              {/* Wizard Character */}
+              <div className="relative w-24 h-28 flex flex-col items-center">
+                {/* Hat */}
+                <div className="relative z-30 flex flex-col items-center -mb-3 animate-bounce-slight">
+                  {/* Cone */}
+                  <div className="w-0 h-0 border-l-[24px] border-r-[24px] border-b-[40px] border-l-transparent border-r-transparent border-b-[#A855F7] drop-shadow-sm relative">
+                    <Star size={10} className="absolute top-4 -left-1 text-[#FFD93D] fill-current animate-pulse" />
+                    <Star size={8} className="absolute top-2 right-0 text-[#FFD93D] fill-current" />
+                  </div>
+                  {/* Brim */}
+                  <div className="w-20 h-3 bg-[#9333EA] rounded-full border-2 border-[#1a1a1a] transform -rotate-2"></div>
                 </div>
-                {/* Body */}
-                <div className="h-[55%] w-full bg-[#4DE1C1] border-[3px] border-[#1a1a1a] border-b-0 flex justify-center">
-                  <div className="w-[30%] h-full border-x-[2px] border-black/5"></div>
+
+                {/* Head */}
+                <div className="relative z-20 w-14 h-14 bg-[#FFD93D] rounded-full border-[3px] border-[#1a1a1a] flex items-center justify-center -mt-1 shadow-md">
+                  {/* Eyes */}
+                  <div className="flex gap-2 -mt-2">
+                    <div className="w-1.5 h-1.5 bg-[#1a1a1a] rounded-full"></div>
+                    <div className="w-1.5 h-1.5 bg-[#1a1a1a] rounded-full"></div>
+                  </div>
+                  {/* Beard */}
+                  <div className="absolute bottom-0 w-full h-[60%] bg-white rounded-b-full rounded-t-lg border-t-2 border-gray-100/20"></div>
                 </div>
-                {/* Tip Container - Sharp! */}
-                <div className="h-[20%] w-full relative flex justify-center">
-                  {/* 1. Outline (Calculated for w-10 = 40px width -> 20px borders) */}
-                  <div className="absolute top-0 border-l-[20px] border-r-[20px] border-t-[24px] border-l-transparent border-r-transparent border-t-[#1a1a1a]"></div>
-                  {/* 2. Wood Fill */}
-                  <div className="absolute top-0 border-l-[17px] border-r-[17px] border-t-[21px] border-l-transparent border-r-transparent border-t-[#FFD93D]"></div>
-                  {/* 3. Graphite */}
-                  <div className="absolute top-[14px] border-l-[6px] border-r-[6px] border-t-[8px] border-l-transparent border-r-transparent border-t-[#1a1a1a]"></div>
+
+                {/* Wand Hand */}
+                <div className="absolute right-0 top-12 z-40 animate-wiggle-fast origin-bottom-left">
+                  <div className="w-1.5 h-12 bg-[#8B4513] border border-[#1a1a1a] rounded-full transform rotate-12 relative">
+                    <Sparkles size={24} className="absolute -top-4 -right-2 text-[#4DE1C1] fill-current animate-spin-slow" />
+                  </div>
                 </div>
               </div>
             </div>

@@ -20,7 +20,7 @@ const StyleCharacter: React.FC<{ id: string }> = ({ id }) => {
           <Zap size={44} className="text-black fill-[#FFD93D]" strokeWidth={2.5} />
         </div>
       );
-    case 'cartoon': // 3D Render -> Cube
+    case 'toy3d': // 3D Render -> Cube
       return (
         <div className={`${commonClasses} -rotate-2`}>
           <Box size={40} className="text-black fill-[#FF66C4]" strokeWidth={2.5} />
@@ -634,7 +634,7 @@ const App: React.FC = () => {
     <div className="fixed inset-0 bg-black flex flex-col z-50">
       <div className="p-4 flex justify-between items-center text-white z-10">
         <button onClick={() => setAppState(AppState.CAMERA)} className="p-3 bg-black/40 rounded-full backdrop-blur-md border-2 border-white/20">
-          <ArrowLeft size={28} />
+          <ArrowLeft size={32} strokeWidth={4} />
         </button>
         <span className="font-black text-xl tracking-widest lowercase font-logo">sketchyz cam</span>
         <div className="w-10"></div>
@@ -711,7 +711,7 @@ const App: React.FC = () => {
 
       <div className="flex gap-4 w-full max-w-md">
         <Button variant="secondary" onClick={() => setAppState(AppState.CAMERA)} className="flex-1 bg-white !text-black border-2 border-black font-logo lowercase">
-          <ArrowLeft size={28} strokeWidth={3} /> Retry
+          <ArrowLeft size={28} strokeWidth={4} /> Retry
         </Button>
         <Button onClick={handleAcceptContext} className="flex-1 bg-[#FF66C4] !text-black font-logo lowercase" icon={<Check size={24} />}>
           Choose Style
