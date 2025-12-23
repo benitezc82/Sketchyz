@@ -624,8 +624,8 @@ const App: React.FC = () => {
         </div>
       )}
 
-      <Button variant="secondary" onClick={() => setAppState(AppState.WELCOME)} className="mt-12 bg-white !text-black hover:!bg-gray-100 font-logo lowercase">
-        <ArrowLeft size={20} /> Back
+      <Button variant="secondary" onClick={() => setAppState(AppState.WELCOME)} className="mt-12 bg-white !text-black hover:!bg-gray-100 font-logo lowercase px-10 py-4 text-xl border-[3px]">
+        <ArrowLeft size={32} strokeWidth={3} /> Back
       </Button>
     </div>
   );
