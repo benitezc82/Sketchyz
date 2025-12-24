@@ -39,7 +39,7 @@ const StyleCharacter: React.FC<{ id: string }> = ({ id }) => {
         </div>
       );
     case 'clay':
-    case 'toy3d': // Clay -> Smiley Face (Simple, classic)
+
       return (
         <div className={`${commonClasses} -rotate-3`}>
           <Smile size={44} className="text-black fill-[#FFA500]" strokeWidth={2.5} />
@@ -58,7 +58,6 @@ const StyleCharacter: React.FC<{ id: string }> = ({ id }) => {
         </div>
       );
     case 'lucky':
-    case 'neon':
       return (
         <div className={`${commonClasses} rotate-6 border-4 border-[#FFD93D] border-dashed`}>
           <Sparkles size={40} className="text-[#FF66C4] fill-[#FF66C4]" strokeWidth={2.5} />
@@ -230,7 +229,7 @@ const App: React.FC = () => {
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
         const dataUrl = canvas.toDataURL('image/jpeg');
         setOriginalImage(dataUrl);
-        setAppState(AppState.CONTEXT_INPUT);
+        setAppState(AppState.STYLE_SELECT);
       }
     }
   };
@@ -254,7 +253,7 @@ const App: React.FC = () => {
       reader.onloadend = () => {
         setOriginalImage(reader.result as string);
         setUserContextInput("");
-        setAppState(AppState.CONTEXT_INPUT);
+        setAppState(AppState.STYLE_SELECT);
       };
       reader.readAsDataURL(file);
     }
@@ -308,6 +307,13 @@ const App: React.FC = () => {
       let subject = drawingSubject || await GeminiService.identifySubject(originalImage!);
       // Aggressively clean "a", "an", "the" from the start, case-insensitive
       subject = subject.replace(/^(a|an|the)\s+/i, "").toLowerCase();
+
+      // Merge with user input if present
+      const userDetails = userContextInput.trim();
+      if (userDetails) {
+        subject = `${subject}. ${userDetails}`;
+      }
+
       setDrawingSubject(subject);
 
       setLoadingMessage(`Dreaming up a ${subject}...`);
@@ -354,25 +360,7 @@ const App: React.FC = () => {
 
 
 
-  const handleAcceptContext = () => {
-    if (userContextInput.trim().length > 0) {
-      setDrawingSubject(userContextInput.trim());
-    }
-    // Proceed to style selection
-    setAppState(AppState.STYLE_SELECT);
-  };
 
-  const handleContextSubmit = async () => {
-    // This function is now ONLY for the final submission from Style Select (if we kept the logic there), 
-    // but we moved it to handleStyleSelect. 
-    // We can keep this as a safety wrapper or just use handleStyleSelect directly in the style buttons.
-    // For now, let's leave it as the 'Generate' logic, but NOT call it from the context screen.
-    if (!selectedStyle) {
-      alert("Please pick a magic style first!");
-      return;
-    }
-    await handleStyleSelect(selectedStyle);
-  };
 
   const handleRegenerate = async () => {
     if (!originalImage || !currentPrompt) return;
@@ -688,40 +676,7 @@ const App: React.FC = () => {
     </div>
   );
 
-  const renderContextInput = () => (
-    <div className="flex flex-col items-center justify-center min-h-screen p-6">
-      <h2 className="text-3xl font-black text-[#1a1a1a] mb-6 text-center bg-[#FFD93D] px-6 py-2 rounded-xl hand-border hand-shadow-sm transform rotate-1 font-logo lowercase">
-        Wow that's a masterpiece!
-      </h2>
 
-      <div className="w-full max-w-md bg-white p-4 rounded-3xl hand-border hand-shadow mb-6">
-        {originalImage && (
-          <div className="aspect-video w-full rounded-2xl overflow-hidden border-2 border-[#1a1a1a] mb-4 bg-gray-100">
-            <img src={originalImage} alt="Your drawing" className="w-full h-full object-contain" />
-          </div>
-        )}
-
-        <div className="relative">
-          <Pencil className="absolute top-4 left-4 text-gray-500" size={24} />
-          <textarea
-            value={userContextInput}
-            onChange={(e) => setUserContextInput(e.target.value)}
-            placeholder="Add additional details here..."
-            className="w-full h-32 pl-12 pr-4 py-4 text-lg font-bold bg-[#1a1a1a] text-white placeholder-gray-500 border-4 border-[#1a1a1a] rounded-xl focus:outline-none focus:border-[#4DE1C1] resize-none"
-          />
-        </div>
-      </div>
-
-      <div className="flex gap-4 w-full max-w-md">
-        <Button variant="secondary" onClick={() => setAppState(AppState.CAMERA)} className="flex-1 bg-white !text-black border-2 border-black font-logo lowercase">
-          <ArrowLeft size={28} strokeWidth={6} /> Retry
-        </Button>
-        <Button onClick={handleAcceptContext} className="flex-1 bg-[#FF66C4] !text-black font-logo lowercase" icon={<Check size={24} />}>
-          Choose Style
-        </Button>
-      </div>
-    </div>
-  );
 
   const renderAnalyzing = () => (
     <div className="flex flex-col items-center justify-center min-h-screen">
@@ -730,34 +685,63 @@ const App: React.FC = () => {
   );
 
   const renderStyleSelect = () => (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-[#FFF9F0]">
       <div className="p-6 pb-2 text-center">
         <div className="inline-block bg-[#FFD93D] px-6 py-3 rounded-2xl hand-border hand-shadow-sm transform -rotate-1 mb-4">
-          <h2 className="text-3xl font-black text-[#1a1a1a] font-logo lowercase">Pick a Magic Style!</h2>
+          <h2 className="text-3xl font-black text-[#1a1a1a] font-logo lowercase">Add details & Pick Style!</h2>
         </div>
-
       </div>
 
-      <div className="flex-1 overflow-y-auto p-6">
+      <div className="px-6 pb-6 max-w-4xl mx-auto w-full">
+        <div className="bg-white p-4 rounded-3xl hand-border hand-shadow mb-6 relative">
+          {originalImage && (
+            <div className="w-full h-48 mb-4 rounded-2xl overflow-hidden border-2 border-gray-100 bg-gray-50 flex items-center justify-center">
+              <img src={originalImage} alt="Your drawing" className="h-full w-full object-contain" />
+            </div>
+          )}
+
+          <Pencil className={`absolute left-4 text-gray-400 ${originalImage ? 'top-[220px]' : 'top-4'}`} size={20} />
+          <textarea
+            value={userContextInput}
+            onChange={(e) => setUserContextInput(e.target.value)}
+            placeholder="Add details (e.g. 'Turn me into a wizard')... or just pick a style below!"
+            className="w-full h-24 pl-10 pr-4 py-2 text-lg font-bold bg-transparent text-[#1a1a1a] placeholder-gray-400 border-none focus:outline-none resize-none"
+          />
+          {/* Action Bar inside the input box */}
+          <div className="flex justify-end border-t-2 border-gray-100 pt-2 mt-2">
+            <Button
+              onClick={() => handleStyleSelect({ id: 'realism_default', name: 'Just Magic', icon: '✨', color: 'bg-black', description: 'default' })}
+              className="bg-[#FF66C4] !text-white text-sm py-2 px-4 rounded-xl"
+              icon={<Sparkles size={18} />}
+            >
+              Just Magic ✨
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex-1 overflow-y-auto px-6 pb-20">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
           {STYLES.map((style) => (
             <button
               key={style.id}
               onClick={() => handleStyleSelect(style)}
-              className={`${style.color} rounded-2xl p-4 flex flex-col items-center justify-center hand-border hand-shadow hand-shadow-hover min-h-[180px] group transition-all`}
+              className={`${style.color} rounded-2xl p-4 flex flex-col items-center justify-center hand-border hand-shadow hand-shadow-hover min-h-[160px] group transition-all relative`}
             >
-              <div className="mb-4 transform group-hover:scale-110 transition-transform drop-shadow-lg">
+              <div className="mb-3 transform group-hover:scale-110 transition-transform drop-shadow-lg">
                 <StyleCharacter id={style.id} />
               </div>
-              <span className="font-logo font-black text-xl text-[#1a1a1a] tracking-tight text-center leading-tight lowercase">{style.name}</span>
+              <span className="font-logo font-black text-xl text-[#1a1a1a] tracking-tight text-center leading-tight lowercase">
+                {style.name}
+              </span>
             </button>
           ))}
         </div>
       </div>
 
-      <div className="p-6 text-center bg-white/50 backdrop-blur-sm border-t-4 border-[#1a1a1a]">
-        <Button variant="secondary" onClick={() => setAppState(AppState.CAMERA)} className="bg-white !text-black font-logo lowercase">
-          Pick different photo
+      <div className="fixed bottom-6 left-6 z-50">
+        <Button variant="secondary" onClick={() => setAppState(AppState.CAMERA)} className="bg-white !text-black font-logo lowercase h-14 w-14 rounded-full flex items-center justify-center border-4 hand-shadow-sm p-0">
+          <ArrowLeft size={28} strokeWidth={6} />
         </Button>
       </div>
     </div>
@@ -1010,7 +994,7 @@ const App: React.FC = () => {
       {appState === AppState.WELCOME && renderWelcome()}
       {appState === AppState.CAMERA && renderCameraSelection()}
       {appState === AppState.LIVE_CAMERA && renderLiveCamera()}
-      {appState === AppState.CONTEXT_INPUT && renderContextInput()}
+
       {appState === AppState.ANALYZING && renderAnalyzing()}
       {appState === AppState.STYLE_SELECT && renderStyleSelect()}
       {appState === AppState.PROCESSING && renderProcessing()}
