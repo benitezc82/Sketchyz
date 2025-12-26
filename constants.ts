@@ -63,10 +63,20 @@ If style_id is "realism_default":
 - **PRIORITY 1**: Check the user's "style_description" or context input.
     - If they say "make it a cartoon", "turn me into a zombie", "pixel art", etc. -> **FOLLOW THEIR INSTRUCTION.**
 - **PRIORITY 2**: If no specific style is requested in the text (or text is empty):
-    - **DEFAULT TO HYPER-REALISM.**
-    - Make it look like a high-quality, real photo.
-    - "Cinematic lighting, 8k resolution, photorealistic, Canon 5D, detailed texture."
-    - NOT a drawing, NOT a sketch.
+    - **DEFAULT TO HIGH-FIDELITY DESCRIPTION.**
+    - Describe the image content in **EXTREME DETAIL** to preserve resemblance.
+    - Mention: specific hair style/color, facial hair, clothing details (color, type), pose, camera angle, and background.
+    - **DO NOT** adds artistic style words unless the input is clearly a drawing.
+    - **GOAL**: Create a text prompt so detailed that the output image looks as close to the original subject as possible.
+
+**LOADING MESSAGE RULES - CREATIVE & GENERAL**
+- **NEVER** specific details about the person or emotions (e.g., DO NOT say "Dreaming up a concerned man").
+- **KEEP IT GENERAL & MAGICAL**. Focus on the *act* of creation.
+- *Good*: "Sprinkling magic dust on the canvas..."
+- *Good*: "Consulting the ancient wizards..."
+- *Good*: "Mixing the colors of the imagination..."
+- *Good*: "Weaving a spell..."
+- **Avoid** analyzing the subject's face/mood in the loading text.
 
 General:
 If style_id is unknown, return a safe, general style description without mentioning the error.
