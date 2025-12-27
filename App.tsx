@@ -632,36 +632,6 @@ const App: React.FC = () => {
           <span className="text-3xl font-black text-[#1a1a1a] font-logo lowercase">Text Magic (No Photo)</span>
         </button>
 
-        <button
-          onClick={handleTextOnlyStart}
-          className="bg-[#FFD93D] hand-border hand-shadow hand-shadow-hover rounded-3xl h-72 flex flex-col items-center justify-center gap-6 group cursor-pointer transition-all relative overflow-hidden md:col-span-2"
-        >
-          <div className="bg-white p-6 rounded-full hand-border hand-shadow-sm group-hover:scale-110 transition-transform">
-            <Type size={56} className="text-[#1a1a1a]" />
-          </div>
-          <span className="text-3xl font-black text-[#1a1a1a] font-logo lowercase">Text Magic (No Photo)</span>
-        </button>
-
-        <button
-          onClick={handleTextOnlyStart}
-          className="bg-[#FFD93D] hand-border hand-shadow hand-shadow-hover rounded-3xl h-72 flex flex-col items-center justify-center gap-6 group cursor-pointer transition-all relative overflow-hidden md:col-span-2"
-        >
-          <div className="bg-white p-6 rounded-full hand-border hand-shadow-sm group-hover:scale-110 transition-transform">
-            <Type size={56} className="text-[#1a1a1a]" />
-          </div>
-          <span className="text-3xl font-black text-[#1a1a1a] font-logo lowercase">Text Magic (No Photo)</span>
-        </button>
-
-        <button
-          onClick={handleTextOnlyStart}
-          className="bg-[#FFD93D] hand-border hand-shadow hand-shadow-hover rounded-3xl h-72 flex flex-col items-center justify-center gap-6 group cursor-pointer transition-all relative overflow-hidden md:col-span-2"
-        >
-          <div className="bg-white p-6 rounded-full hand-border hand-shadow-sm group-hover:scale-110 transition-transform">
-            <Type size={56} className="text-[#1a1a1a]" />
-          </div>
-          <span className="text-3xl font-black text-[#1a1a1a] font-logo lowercase">Text Magic (No Photo)</span>
-        </button>
-
       </div>
 
       {error && (

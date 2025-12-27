@@ -77,7 +77,7 @@ export const getBrainResponse = async (
     });
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash-exp', // Gemini 3 Tech Preview
+      model: 'gemini-1.5-pro', // Upgraded to Pro for better instruction following
       config: {
         systemInstruction: AI_BRAIN_SYSTEM_INSTRUCTION,
         responseMimeType: "application/json",
@@ -166,6 +166,10 @@ export const generateStyledImage = async (
     throw new Error("Gemini 3 returned no image.");
 
   } catch (g3Error) {
+    console.error("⚠️ Gemini 3 Pro Failed:", g3Error);
+    throw g3Error; // Force error to verify we are using Pro
+    /* 
+    // TEMPORARILY DISABLED FALLBACK TO VERIFY QUALITY
     console.warn("⚠️ Gemini 3 Failed, falling back to Gemini 2.0 Flash:", g3Error);
 
     // ATTEMPT 2: Gemini 2.0 Flash (Stable Fallback)
@@ -194,7 +198,8 @@ export const generateStyledImage = async (
       // Throw the original error if it was permission related, or the fallback error?
       // Let's throw a combined message so the user sees both if needed.
       throw new Error(`Generation failed. Primary: ${(g3Error as any).message}. Fallback: ${(fallbackError as any).message}`);
-    }
+    } 
+    */
   }
 };
 
