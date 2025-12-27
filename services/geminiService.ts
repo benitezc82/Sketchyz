@@ -108,7 +108,7 @@ export const getBrainResponse = async (
  * 3. Generate the styled image using Nano Banana Pro (Gemini 3 Pro Image).
  */
 export const generateStyledImage = async (
-  originalImageBase64: string,
+  originalImageBase64: string | null, // Made optional
   stylePrompt: string,
   styleId?: string
 ): Promise<string> => {
@@ -121,24 +121,33 @@ export const generateStyledImage = async (
     systemConstraint = "\n\nIMPORTANT: PRESERVE and ENHANCE the photorealism. Do NOT turn this into a drawing or painting. Output must look like a high-end RAW photograph taken with a DSLR camera. Improve texture, lighting, and detail to 8k quality.";
   }
 
+  // Prepare parts array dynamically OUTSIDE try block so fallback can use it
+  const parts: any[] = [];
+
+  if (originalImageBase64) {
+    parts.push({
+      inlineData: {
+        data: cleanBase64(originalImageBase64),
+        mimeType: getMimeType(originalImageBase64),
+      },
+    });
+    parts.push({
+      text: "Generate an image based on this input. RENDER STYLE: " + stylePrompt + "\n\nINPUT IMAGE REFERENCE: Use the attached image ONLY for composition and pose. " + systemConstraint
+    });
+  } else {
+    // Text-Only Mode
+    parts.push({
+      text: "Generate an image based on this description. RENDER STYLE: " + stylePrompt + "\n\nDESCRIPTION: " + stylePrompt + ". " + systemConstraint
+    });
+  }
+
   try {
     // ATTEMPT 1: Gemini 3 Pro Image (The "Latest")
     console.log("🎨 Attempting generation with Gemini 3 Pro Image...");
+
     const response = await ai.models.generateContent({
       model: 'gemini-3-pro-image-preview',
-      contents: {
-        parts: [
-          {
-            inlineData: {
-              data: cleanBase64(originalImageBase64),
-              mimeType: getMimeType(originalImageBase64),
-            },
-          },
-          {
-            text: "Generate an image based on this input. RENDER STYLE: " + stylePrompt + "\n\nINPUT IMAGE REFERENCE: Use the attached image ONLY for composition and pose. " + systemConstraint
-          },
-        ],
-      },
+      contents: { parts },
       config: {
         imageConfig: {
           aspectRatio: "1:1",
@@ -163,19 +172,7 @@ export const generateStyledImage = async (
     try {
       const response = await ai.models.generateContent({
         model: 'gemini-2.0-flash-exp',
-        contents: {
-          parts: [
-            {
-              inlineData: {
-                data: cleanBase64(originalImageBase64),
-                mimeType: getMimeType(originalImageBase64),
-              },
-            },
-            {
-              text: "Generate an image based on this input. RENDER STYLE: " + stylePrompt + "\n\nINPUT IMAGE REFERENCE: Use the attached image ONLY for composition and pose. " + systemConstraint
-            },
-          ],
-        },
+        contents: { parts }, // Reuse the 'parts' array constructed above
         config: {
           responseMimeType: 'image/jpeg'
         }

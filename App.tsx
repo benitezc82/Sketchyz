@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Camera, RotateCcw, Download, Wand2, Images, Trash2, Save, ArrowLeft, LayoutGrid, Upload, Sparkles, Star, Share2, Pencil, Check, Key, X, Zap, Heart, Bot, Eye, Bell, Palette, Box, Smile } from 'lucide-react';
+import { Camera, RotateCcw, Download, Wand2, Images, Trash2, Save, ArrowLeft, LayoutGrid, Upload, Sparkles, Star, Share2, Pencil, Check, Key, X, Zap, Heart, Bot, Eye, Bell, Palette, Box, Smile, Type } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 import { AppState, StyleOption, GeneratedResult, GalleryItem } from './types';
 import { STYLES } from './constants';
@@ -259,6 +259,12 @@ const App: React.FC = () => {
     }
   };
 
+  const handleTextOnlyStart = () => {
+    setOriginalImage(null);
+    setUserContextInput(""); // Clear previous input
+    setAppState(AppState.STYLE_SELECT);
+  };
+
 
 
   const analyzeImage = async (base64Image: string) => {
@@ -304,14 +310,23 @@ const App: React.FC = () => {
       // Small pause for "Waking up"
       await new Promise(r => setTimeout(r, 1500));
 
-      let subject = drawingSubject || await GeminiService.identifySubject(originalImage!);
-      // Aggressively clean "a", "an", "the" from the start, case-insensitive
-      subject = subject.replace(/^(a|an|the)\s+/i, "").toLowerCase();
+      let subject = "";
+      if (originalImage) {
+        subject = drawingSubject || await GeminiService.identifySubject(originalImage);
+        // Aggressively clean "a", "an", "the" from the start, case-insensitive
+        subject = subject.replace(/^(a|an|the)\s+/i, "").toLowerCase();
+      } else {
+        // Text-only mode: use user input as subject or a generic fallback
+        subject = userContextInput.trim() || "magical creation";
+      }
 
-      // Merge with user input if present
+      // Merge with user input if present (only if we derived a subject from image)
       const userDetails = userContextInput.trim();
-      if (userDetails) {
+      if (originalImage && userDetails) {
         subject = `${subject}. ${userDetails}`;
+      } else if (!originalImage) {
+        // In text only, subject IS the user details
+        subject = userDetails || "magical creation";
       }
 
       setDrawingSubject(subject);
@@ -340,7 +355,7 @@ const App: React.FC = () => {
       // Allow the painting message to be seen before the heavy lifting starts/finishes
       await new Promise(r => setTimeout(r, 1500));
 
-      const styledImage = await GeminiService.generateStyledImage(originalImage!, promptToUse, style.id);
+      const styledImage = await GeminiService.generateStyledImage(originalImage, promptToUse, style.id);
       setGenerationCount(prev => prev + 1);
 
       setResult({
@@ -605,6 +620,46 @@ const App: React.FC = () => {
             <Upload size={56} className="text-[#1a1a1a]" />
           </div>
           <span className="text-3xl font-black text-[#1a1a1a] font-logo lowercase">Upload File</span>
+        </button>
+
+        <button
+          onClick={handleTextOnlyStart}
+          className="bg-[#FFD93D] hand-border hand-shadow hand-shadow-hover rounded-3xl h-72 flex flex-col items-center justify-center gap-6 group cursor-pointer transition-all relative overflow-hidden md:col-span-2"
+        >
+          <div className="bg-white p-6 rounded-full hand-border hand-shadow-sm group-hover:scale-110 transition-transform">
+            <Type size={56} className="text-[#1a1a1a]" />
+          </div>
+          <span className="text-3xl font-black text-[#1a1a1a] font-logo lowercase">Text Magic (No Photo)</span>
+        </button>
+
+        <button
+          onClick={handleTextOnlyStart}
+          className="bg-[#FFD93D] hand-border hand-shadow hand-shadow-hover rounded-3xl h-72 flex flex-col items-center justify-center gap-6 group cursor-pointer transition-all relative overflow-hidden md:col-span-2"
+        >
+          <div className="bg-white p-6 rounded-full hand-border hand-shadow-sm group-hover:scale-110 transition-transform">
+            <Type size={56} className="text-[#1a1a1a]" />
+          </div>
+          <span className="text-3xl font-black text-[#1a1a1a] font-logo lowercase">Text Magic (No Photo)</span>
+        </button>
+
+        <button
+          onClick={handleTextOnlyStart}
+          className="bg-[#FFD93D] hand-border hand-shadow hand-shadow-hover rounded-3xl h-72 flex flex-col items-center justify-center gap-6 group cursor-pointer transition-all relative overflow-hidden md:col-span-2"
+        >
+          <div className="bg-white p-6 rounded-full hand-border hand-shadow-sm group-hover:scale-110 transition-transform">
+            <Type size={56} className="text-[#1a1a1a]" />
+          </div>
+          <span className="text-3xl font-black text-[#1a1a1a] font-logo lowercase">Text Magic (No Photo)</span>
+        </button>
+
+        <button
+          onClick={handleTextOnlyStart}
+          className="bg-[#FFD93D] hand-border hand-shadow hand-shadow-hover rounded-3xl h-72 flex flex-col items-center justify-center gap-6 group cursor-pointer transition-all relative overflow-hidden md:col-span-2"
+        >
+          <div className="bg-white p-6 rounded-full hand-border hand-shadow-sm group-hover:scale-110 transition-transform">
+            <Type size={56} className="text-[#1a1a1a]" />
+          </div>
+          <span className="text-3xl font-black text-[#1a1a1a] font-logo lowercase">Text Magic (No Photo)</span>
         </button>
 
       </div>
