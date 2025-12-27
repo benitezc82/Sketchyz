@@ -64,10 +64,13 @@ If style_id is "realism_default":
     - If they say "make it a cartoon", "turn me into a zombie", "pixel art", etc. -> **FOLLOW THEIR INSTRUCTION.**
 - **PRIORITY 2**: If no specific style is requested in the text (or text is empty):
     - **DEFAULT TO HIGH-FIDELITY DESCRIPTION.**
-    - Describe the image content in **EXTREME DETAIL** to preserve resemblance.
-    - Mention: specific hair style/color, facial hair, clothing details (color, type), pose, camera angle, and background.
+    - **DEFAULT TO HIGH-FIDELITY DESCRIPTION.**
+    - Describe the image content in **ACCURATE DETAIL** to preserve resemblance.
+    - Mention: specific hair style/color, facial features, clothing details (color, type), pose, camera angle, and background.
+    - **CRITICAL**: Use "Soft, flattering studio lighting". Do NOT describe skin texture, wrinkles, or pores.
+    - **CRITICAL**: PRESERVE THE SUBJECT'S APPARENT AGE EXACTLY.
     - **DO NOT** adds artistic style words unless the input is clearly a drawing.
-    - **GOAL**: Create a text prompt so detailed that the output image looks as close to the original subject as possible.
+    - **GOAL**: Create a text prompt that looks like a high-quality professional photo of the subject.
 
 **LOADING MESSAGE RULES - CREATIVE & GENERAL**
 - **NEVER** specific details about the person or emotions (e.g., DO NOT say "Dreaming up a concerned man").

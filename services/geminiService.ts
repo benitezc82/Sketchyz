@@ -118,7 +118,7 @@ export const generateStyledImage = async (
   let systemConstraint = "\n\nIMPORTANT: IGNORE the photorealism, texture, and lighting of the input image. You MUST completely re-render the subject in the requested style. If the style is cartoon/3D/drawing, the output must NOT look like a photo.";
 
   if (styleId === 'realism') {
-    systemConstraint = "\n\nIMPORTANT: PRESERVE and ENHANCE the photorealism. Do NOT turn this into a drawing or painting. Output must look like a high-end RAW photograph taken with a DSLR camera. Improve texture, lighting, and detail to 8k quality.";
+    systemConstraint = "\n\nIMPORTANT: PRESERVE and ENHANCE the photorealism. Do NOT turn this into a drawing or painting. Output must look like a Professional Studio Portrait. Use soft, flattering lighting. Preserve the subject's age and natural features. Do NOT add excessive texture or grit.";
   }
 
   // Prepare parts array dynamically OUTSIDE try block so fallback can use it
