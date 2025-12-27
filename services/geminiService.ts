@@ -77,7 +77,7 @@ export const getBrainResponse = async (
     });
 
     const response = await ai.models.generateContent({
-      model: 'gemini-1.5-pro', // Upgraded to Pro for better instruction following
+      model: 'gemini-3-pro', // Updated to Gemini 3 Pro as requested
       config: {
         systemInstruction: AI_BRAIN_SYSTEM_INSTRUCTION,
         responseMimeType: "application/json",
