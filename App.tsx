@@ -378,7 +378,8 @@ const App: React.FC = () => {
 
 
   const handleRegenerate = async () => {
-    if (!originalImage || !currentPrompt) return;
+    // FIXED: Allow regeneration even if originalImage is null (Text Magic mode)
+    if (!currentPrompt) return;
 
     // DECISION: Use original sketch OR the last result?
     // If 'useResultAsInput' is checked AND we have a result, use that.
