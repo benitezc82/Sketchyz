@@ -119,6 +119,10 @@ export const generateStyledImage = async (
 
   if (styleId === 'realism') {
     systemConstraint = "\n\nIMPORTANT: PRESERVE and ENHANCE the photorealism. Do NOT turn this into a drawing or painting. Output must look like a Professional Studio Portrait. Use soft, flattering lighting. Preserve the subject's age and natural features. Do NOT add excessive texture, grit, noise, or grain. Ensure skin is smooth but natural.";
+  } else if (styleId === 'realism_default') {
+    // Just Magic/Text Magic: The prompt determines the style (could be photo or art).
+    // Trust the description, but enforce quality.
+    systemConstraint = "\n\nIMPORTANT: Follow the RENDER STYLE and DESCRIPTION exactly. Ensure the output is CLEAN, SMOOTH, and HIGH QUALITY. Do NOT add noise, pixelation, or artifacts.";
   }
 
   // Prepare parts array dynamically OUTSIDE try block so fallback can use it
