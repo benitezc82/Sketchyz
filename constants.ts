@@ -93,6 +93,13 @@ Always be positive and encourage creativity.
 
 export const STYLES: StyleOption[] = [
   {
+    id: 'realism_default',
+    name: 'Just Magic',
+    icon: '✨',
+    color: 'bg-black',
+    description: 'High-fidelity magic. Photorealistic but polished. Strictly follows your text instructions if provided, otherwise enhances the image with professional studio lighting and detail. Preserves identity.'
+  },
+  {
     id: 'comic',
     name: 'Comic Book',
     icon: '💥',
