@@ -175,29 +175,21 @@ export const generateStyledImage = async (
       },
     });
 
-    if (styleId === 'realism' || styleId === 'realism_default') {
-      // STRICT EDITING MODE for Realism/Just Magic
-      // We want to "Edit" the photo, not "Re-imagine" it.
-      parts.push({
-        text: "CRITICAL INSTRUCTION: You are a Photo Editor. You must EDIT the input image while preserving its exact geometry.\n" +
-          "1. COPY the source image's pose, facial expressions, and composition EXACTLY.\n" +
-          "2. DO NOT change the direction of eyes or head.\n" +
-          "3. APPLY CHANGES: " + stylePrompt + "\n" +
-          "4. IGNORE internal knowledge of what constitutes a 'good photo' if it conflicts with the source image's reality.\n" +
-          systemConstraint
-      });
-    } else {
-      // CREATIVE RE-IMAGINING (Stylized) - UPDATED FOR LOYALTY
-      // We want to apply the style (Cartoon/Clay) but KEEP the people/subjects recognizable.
-      parts.push({
-        text: "IMAGE MODIFICATION INSTRUCTION:\n" +
-          "1. You are a Stylized Art Filter. You must KEEP the Subject Identity and Scene Content of the input image.\n" +
-          "2. DO NOT change the people, their faces, or their poses. The output must look like the SAME people, just drawn in the requested style.\n" +
-          "3. APPLY STYLE: " + stylePrompt + "\n" +
-          "4. If the style is abstract, preserve the main shapes and distinctive features of the subject.\n" +
-          systemConstraint
-      });
-    }
+    // UNIFIED STRICTNESS: ALWAYS use the strict "Photo Editor" logic.
+    // We treat ALL styles (Comic, Clay, Realism) as a strict "Style Transfer" task.
+    // This prevents hallucinations/content changes.
+
+    const unifiedInstruction = "CRITICAL OBJECTIVE: STRICT STYLE TRANSFER.\n" +
+      "1. You are a Filter. You MUST preserve the Input Image's content, geometry, pose, and facial expressions EXACTLY.\n" +
+      "2. DO NOT hallucinate new objects, people, or emotions.\n" +
+      "3. APPLY STYLE: " + stylePrompt + "\n" +
+      "4. KEEP the subject looking like the SAME PERSON. Do not 're-imagine' them as a generic character.\n" +
+      "5. If the style is abstract (e.g. Pixel Art), map the pixels directly to the source geometry.\n" +
+      systemConstraint;
+
+    parts.push({
+      text: unifiedInstruction
+    });
   } else {
     // Text-Only Mode
     parts.push({
