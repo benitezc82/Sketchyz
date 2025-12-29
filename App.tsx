@@ -343,7 +343,16 @@ const App: React.FC = () => {
         'after_generation'
       );
 
-      const promptToUse = brainResponse.style_prompt || style.description;
+      // DETERMINISTIC STABILITY UPDATE:
+      // If it's a preset style (Comic, Clay, etc), ignore the Brain's creative prompt
+      // and use the static description. This halts hallucinations.
+      // Only use Brain prompt for Magic/Lucky.
+      let promptToUse = brainResponse.style_prompt;
+      if (style.id !== 'realism_default' && style.id !== 'lucky') {
+        console.log("🔒 Using static style description for initial generation.");
+        promptToUse = style.description;
+      }
+
       setCurrentPrompt(promptToUse);
       setSelectedStyle(style);
 
@@ -413,16 +422,29 @@ const App: React.FC = () => {
       const styleChanged = result?.styleId !== activeStyle.id;
 
       if (styleChanged) {
-        console.log(`🎨 Style changed from ${result?.styleId} to ${activeStyle.id}. Asking Brain for new prompt...`);
-        // Re-ask Brain for prompt matching the NEW style
-        // We use the same 'subject' we identified earlier.
-        const brainResponse = await GeminiService.getBrainResponse(
-          'style_description',
-          activeStyle.id,
-          drawingSubject || "a drawing",
-          userContextInput || ""
-        );
-        promptToUse = brainResponse.style_prompt;
+        console.log(`🎨 Style changed from ${result?.styleId} to ${activeStyle.id}.`);
+
+        // DETERMINISTIC STABILITY UPDATE:
+        // For preset styles (Comic, Clay, etc.), DO NOT ask the Brain to describe the image.
+        // The Brain tends to hallucinate ("A happy superhero") which overrides the image.
+        // We will use the STATIC high-quality style description from constants.ts.
+        // We ONLY use the Brain for "Just Magic" or "Lucky" where creativity is required.
+
+        if (activeStyle.id !== 'realism_default' && activeStyle.id !== 'lucky') {
+          console.log("🔒 Using static style description for stability.");
+          promptToUse = activeStyle.description;
+        } else {
+          console.log("✨ Asking Brain for creative prompt...");
+          // Re-ask Brain for prompt matching the NEW style
+          const brainResponse = await GeminiService.getBrainResponse(
+            'style_description',
+            activeStyle.id,
+            drawingSubject || "a drawing",
+            userContextInput || ""
+          );
+          promptToUse = brainResponse.style_prompt;
+        }
+
         // Update the current prompt state so future refinements use this new base
         setCurrentPrompt(promptToUse);
       }
