@@ -107,12 +107,47 @@ export const getBrainResponse = async (
 /**
  * 3. Generate the styled image using Nano Banana Pro (Gemini 3 Pro Image).
  */
+// Helper to get image dimensions
+const getImageDimensions = (base64: string): Promise<{ width: number, height: number }> => {
+  return new Promise((resolve) => {
+    // In backend/Node environment we might need a different approach, but for client-side usage:
+    // If this runs in Node, we'd need 'image-size' package. 
+    // Since this is a Vite client app, we can use Image object.
+    if (typeof Image === 'undefined') {
+      resolve({ width: 1024, height: 1024 }); // Fallback for server-side
+      return;
+    }
+    const img = new Image();
+    img.onload = () => resolve({ width: img.width, height: img.height });
+    img.src = base64;
+  });
+};
+
+const getBestAspectRatio = (width: number, height: number): string => {
+  const ratio = width / height;
+  if (Math.abs(ratio - 1) < 0.1) return "1:1";
+  if (Math.abs(ratio - 3 / 4) < 0.1) return "3:4";
+  if (Math.abs(ratio - 4 / 3) < 0.1) return "4:3";
+  if (Math.abs(ratio - 9 / 16) < 0.1) return "9:16";
+  if (Math.abs(ratio - 16 / 9) < 0.1) return "16:9";
+  // Default fallback if weird ratio
+  return ratio > 1 ? "4:3" : "3:4";
+};
+
 export const generateStyledImage = async (
   originalImageBase64: string | null, // Made optional
   stylePrompt: string,
   styleId?: string
 ): Promise<string> => {
   const ai = new GoogleGenAI({ apiKey: getApiKey() });
+
+  // Calculate Aspect Ratio
+  let targetAspectRatio = "1:1";
+  if (originalImageBase64) {
+    const { width, height } = await getImageDimensions(originalImageBase64);
+    targetAspectRatio = getBestAspectRatio(width, height);
+    console.log(`📐 Detected Ratio: ${width}x${height} -> ${targetAspectRatio}`);
+  }
 
   // Conditional System Instruction based on style
   let systemConstraint = "\n\nIMPORTANT: IGNORE the photorealism, texture, and lighting of the input image. You MUST completely re-render the subject in the requested style. If the style is cartoon/3D/drawing, the output must NOT look like a photo. Ensure the output is CLEAN, SMOOTH, and HIGH QUALITY. Do NOT add noise, film grain, compression artifacts, pixelation, or blur.";
@@ -169,7 +204,7 @@ export const generateStyledImage = async (
       contents: { parts },
       config: {
         imageConfig: {
-          aspectRatio: "1:1",
+          aspectRatio: targetAspectRatio,
           imageSize: "1K"
         }
       }
@@ -180,7 +215,7 @@ export const generateStyledImage = async (
     // Validate G3 response
     const candidate = response.candidates?.[0];
     if (candidate?.content?.parts?.[0]?.inlineData?.data) {
-      return `data:image/png;base64,${candidate.content.parts[0].inlineData.data}`;
+      return `data:image/png;base664,${candidate.content.parts[0].inlineData.data}`;
     }
     throw new Error("Gemini 3 returned no image.");
 

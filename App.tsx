@@ -796,12 +796,12 @@ const App: React.FC = () => {
 
       <div className="flex-1 flex flex-col md:flex-row items-center justify-center p-4 gap-6 md:gap-10 relative z-10">
 
-        <div className="relative group w-full max-w-md aspect-square rounded-3xl overflow-hidden hand-border shadow-[8px_8px_0_#FFF] bg-white">
+        <div className="relative group w-full max-w-md bg-white rounded-3xl overflow-hidden hand-border shadow-[8px_8px_0_#FFF]">
           {result?.styledImage && (
             <img
               src={result.styledImage}
               alt="Magic Result"
-              className="w-full h-full object-cover"
+              className="w-full h-auto object-contain max-h-[60vh]"
             />
           )}
           <div className="absolute bottom-4 right-4 bg-[#FF66C4] text-white font-bold px-4 py-2 rounded-xl hand-border shadow-[2px_2px_0_#000] text-sm transform -rotate-2 font-logo lowercase">
@@ -809,12 +809,12 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        <div className="w-32 md:w-40 aspect-square rounded-2xl overflow-hidden hand-border shadow-[4px_4px_0_#888] bg-white transform rotate-3 hover:rotate-0 transition-transform">
+        <div className="w-32 md:w-40 bg-white rounded-2xl overflow-hidden hand-border shadow-[4px_4px_0_#888] transform rotate-3 hover:rotate-0 transition-transform">
           {result?.originalImage && (
             <img
               src={result.originalImage}
               alt="Original"
-              className="w-full h-full object-cover"
+              className="w-full h-auto object-contain"
             />
           )}
           <div className="absolute bottom-0 w-full bg-black/50 text-white text-[10px] text-center py-1 font-bold font-logo lowercase">Original</div>
