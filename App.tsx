@@ -386,7 +386,10 @@ const App: React.FC = () => {
 
     // DECISION: Use original sketch OR the last result?
     // If 'useResultAsInput' is checked AND we have a result, use that.
+    // DECISION: Use original sketch OR the last result?
+    // If 'useResultAsInput' is checked AND we have a result, use that.
     const inputImage = (useResultAsInput && result?.styledImage) ? result.styledImage : originalImage;
+    console.log(`🖼️ Regenerating. UseResultAsInput: ${useResultAsInput}. Source: ${inputImage === result?.styledImage ? "Previous Result" : "Original Sketch"}`);
 
     setAppState(AppState.PROCESSING); // Re-use processing state
     setHasSaved(false);
@@ -905,7 +908,7 @@ const App: React.FC = () => {
                 className="w-4 h-4 accent-[#FF66C4]"
               />
               <span className={`text-xs font-bold font-logo lowercase ${useResultAsInput ? "text-[#FF66C4]" : "text-gray-500"}`}>
-                {useResultAsInput ? "✨ Edit this result" : "✏️ Edit my drawing"}
+                {useResultAsInput ? "✨ Use result as base" : "✏️ Edit original drawing"}
               </span>
             </label>
           </div>
