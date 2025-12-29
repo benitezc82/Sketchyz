@@ -135,9 +135,24 @@ export const generateStyledImage = async (
         mimeType: getMimeType(originalImageBase64),
       },
     });
-    parts.push({
-      text: "Generate an image based on this input. RENDER STYLE: " + stylePrompt + "\n\nINPUT IMAGE REFERENCE: Use the attached image ONLY for composition and pose. " + systemConstraint
-    });
+
+    if (styleId === 'realism' || styleId === 'realism_default') {
+      // STRICT EDITING MODE for Realism/Just Magic
+      // We want to "Edit" the photo, not "Re-imagine" it.
+      parts.push({
+        text: "CRITICAL INSTRUCTION: You are a Photo Editor. You must EDIT the input image while preserving its exact geometry.\n" +
+          "1. COPY the source image's pose, facial expressions, and composition EXACTLY.\n" +
+          "2. DO NOT change the direction of eyes or head.\n" +
+          "3. APPLY CHANGES: " + stylePrompt + "\n" +
+          "4. IGNORE internal knowledge of what constitutes a 'good photo' if it conflicts with the source image's reality.\n" +
+          systemConstraint
+      });
+    } else {
+      // CREATIVE RE-IMAGINING for Stylized (Cartoon, Clay, etc)
+      parts.push({
+        text: "Generate an image based on this input. RENDER STYLE: " + stylePrompt + "\n\nINPUT IMAGE REFERENCE: Use the attached image ONLY for composition and pose. " + systemConstraint
+      });
+    }
   } else {
     // Text-Only Mode
     parts.push({
