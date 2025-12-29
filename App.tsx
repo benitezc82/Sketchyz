@@ -379,7 +379,7 @@ const App: React.FC = () => {
 
   const handleRegenerate = async () => {
     // FIXED: Allow regeneration even if originalImage is null (Text Magic mode)
-    if (!currentPrompt) return;
+    if (!currentPrompt && !refinementInput) return;
 
     // DECISION: Use original sketch OR the last result?
     // If 'useResultAsInput' is checked AND we have a result, use that.
@@ -389,12 +389,36 @@ const App: React.FC = () => {
     setHasSaved(false);
 
     try {
-      const effectivePrompt = refinementInput ? `${currentPrompt} ${refinementInput}` : currentPrompt;
+      let promptToUse = currentPrompt;
+
+      // CRITICAL FIX: If the user CHANGED the style via dropdown, the old prompt (e.g. "Realistic photo...")
+      // will conflict with the new style (e.g. "Comic book"). 
+      // We MUST ask the Brain for a new prompt for the *new* style.
+      const styleChanged = result?.styleId !== selectedStyle?.id;
+
+      if (styleChanged && selectedStyle) {
+        console.log("🎨 Style changed during refinement. Asking Brain for new prompt...");
+        // Re-ask Brain for prompt matching the NEW style
+        // We use the same 'subject' we identified earlier.
+        const brainResponse = await GeminiService.getBrainResponse(
+          'style_description',
+          selectedStyle.id,
+          drawingSubject || "a drawing",
+          userContextInput || ""
+        );
+        promptToUse = brainResponse.style_prompt;
+        // Update the current prompt state so future refinements use this new base
+        setCurrentPrompt(promptToUse);
+      }
+
+      const effectivePrompt = refinementInput ? `${promptToUse} ${refinementInput}` : promptToUse;
+
       const generatedImageBase64 = await GeminiService.generateStyledImage(inputImage, effectivePrompt, selectedStyle?.id);
 
       setResult(prev => prev ? {
         ...prev,
-        styledImage: generatedImageBase64
+        styledImage: generatedImageBase64,
+        styleId: selectedStyle?.id || prev.styleId // Update result style ID too
       } : null);
 
       setAppState(AppState.RESULT);
