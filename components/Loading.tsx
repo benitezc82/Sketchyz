@@ -66,13 +66,7 @@ export const Loading: React.FC<LoadingProps> = ({ message }) => {
         magic happening...
       </h2>
 
-      <div className="relative z-10">
-        <div className="bg-white px-8 py-4 rounded-2xl hand-border hand-shadow-sm transform rotate-1 inline-block max-w-sm">
-          <p className="text-xl md:text-2xl font-bold text-[#1a1a1a] leading-tight italic">
-            "{message}"
-          </p>
-        </div>
-      </div>
+      {/* Text Box Removed */}
 
       {/* Bottom Hint */}
 
