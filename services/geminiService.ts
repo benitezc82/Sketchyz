@@ -217,11 +217,15 @@ export const generateStyledImage = async (
     console.log("📸 API RESPONSE (G3):", response);
 
     // Validate G3 response
+    // Validate G3 response
     const candidate = response.candidates?.[0];
-    if (candidate?.content?.parts?.[0]?.inlineData?.data) {
-      return `data:image/png;base64,${candidate.content.parts[0].inlineData.data}`;
+    const part = candidate?.content?.parts?.[0];
+    if (part?.inlineData?.data) {
+      const mimeType = part.inlineData.mimeType || "image/jpeg";
+      return `data:${mimeType};base64,${part.inlineData.data}`;
     }
-    throw new Error("Gemini 3 returned no image.");
+    console.error("❌ Invalid G3 Response Structure:", JSON.stringify(response, null, 2));
+    throw new Error("Gemini 3 returned no image data.");
 
   } catch (g3Error) {
     console.error("⚠️ Gemini 3 Pro Failed:", g3Error);
