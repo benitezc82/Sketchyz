@@ -796,16 +796,19 @@ const App: React.FC = () => {
 
       <div className="flex-1 flex flex-col md:flex-row items-center justify-center p-4 gap-6 md:gap-10 relative z-10">
 
-        <div className="relative group w-full max-w-md bg-white rounded-3xl overflow-hidden hand-border shadow-[8px_8px_0_#FFF]">
-          {result?.styledImage && (
-            <img
-              src={result.styledImage}
-              alt="Magic Result"
-              className="w-full h-auto object-contain max-h-[60vh]"
-            />
-          )}
-          <div className="absolute bottom-4 right-4 bg-[#FF66C4] text-white font-bold px-4 py-2 rounded-xl hand-border shadow-[2px_2px_0_#000] text-sm transform -rotate-2 font-logo lowercase">
-            {selectedStyle?.name} Style
+        {/* RESULT IMAGE CONTAINER */}
+        <div className="relative group flex justify-center items-center">
+          <div className="relative bg-white rounded-3xl overflow-hidden hand-border shadow-[8px_8px_0_#FFF] max-w-[90vw]">
+            {result?.styledImage && (
+              <img
+                src={result.styledImage}
+                alt="Magic Result"
+                className="w-auto h-auto max-w-full max-h-[60vh] object-contain block"
+              />
+            )}
+            <div className="absolute bottom-4 right-4 bg-[#FF66C4] text-white font-bold px-4 py-2 rounded-xl hand-border shadow-[2px_2px_0_#000] text-sm transform -rotate-2 font-logo lowercase">
+              {selectedStyle?.name} Style
+            </div>
           </div>
         </div>
 
