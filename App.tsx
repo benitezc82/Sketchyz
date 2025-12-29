@@ -89,15 +89,9 @@ const App: React.FC = () => {
   const [useResultAsInput, setUseResultAsInput] = useState<boolean>(false); // Iterative toggle
   const [facingMode, setFacingMode] = useState<'user' | 'environment'>('environment');
 
-  const [generationCount, setGenerationCount] = useState<number>(() => {
-    return parseInt(localStorage.getItem('sketchyz_gen_count') || '0');
-  });
+  const [generationCount, setGenerationCount] = useState<number>(0);
   const MAX_GENERATIONS = 10; // Increased limit
   const [refinementInput, setRefinementInput] = useState(""); // User's additive details
-
-  useEffect(() => {
-    localStorage.setItem('sketchyz_gen_count', generationCount.toString());
-  }, [generationCount]);
 
   const galleryInputRef = useRef<HTMLInputElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
