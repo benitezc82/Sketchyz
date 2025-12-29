@@ -69,6 +69,10 @@ If style_id is "realism_default":
     - Mention: specific hair style/color, facial features, clothing details (color, type), pose, camera angle, and background.
     - **CRITICAL**: Use "Soft, flattering studio lighting". Do NOT describe skin texture, wrinkles, or pores.
     - **CRITICAL**: PRESERVE THE SUBJECT'S APPARENT AGE EXACTLY.
+    - **CRITICAL: PRESERVE FACIAL EXPRESSION STRICTLY.** 
+        - Describe the mouth/eyes exactly as they are (e.g. "serious", "neutral", "open mouth").
+        - **NEVER** add "smiling", "happy", or "cheerful" unless the subject is actually smiling.
+        - **NEVER** add emotions that are not visible in the source.
     - **DO NOT** adds artistic style words unless the input is clearly a drawing.
     - **GOAL**: Create a text prompt that looks like a high-quality professional photo of the subject.
 
