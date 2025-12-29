@@ -187,9 +187,15 @@ export const generateStyledImage = async (
           systemConstraint
       });
     } else {
-      // CREATIVE RE-IMAGINING for Stylized (Cartoon, Clay, etc)
+      // CREATIVE RE-IMAGINING (Stylized) - UPDATED FOR LOYALTY
+      // We want to apply the style (Cartoon/Clay) but KEEP the people/subjects recognizable.
       parts.push({
-        text: "Generate an image based on this input. RENDER STYLE: " + stylePrompt + "\n\nINPUT IMAGE REFERENCE: Use the attached image ONLY for composition and pose. " + systemConstraint
+        text: "IMAGE MODIFICATION INSTRUCTION:\n" +
+          "1. You are a Stylized Art Filter. You must KEEP the Subject Identity and Scene Content of the input image.\n" +
+          "2. DO NOT change the people, their faces, or their poses. The output must look like the SAME people, just drawn in the requested style.\n" +
+          "3. APPLY STYLE: " + stylePrompt + "\n" +
+          "4. If the style is abstract, preserve the main shapes and distinctive features of the subject.\n" +
+          systemConstraint
       });
     }
   } else {
