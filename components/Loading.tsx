@@ -7,7 +7,7 @@ interface LoadingProps {
 
 export const Loading: React.FC<LoadingProps> = ({ message }) => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[450px] p-10 text-center animate-fadeIn relative overflow-hidden">
+    <div className="flex flex-col items-center justify-center min-h-[450px] p-10 text-center animate-fadeIn relative">
 
       {/* Background Glows */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#4DE1C1]/20 rounded-full blur-3xl animate-pulse"></div>
