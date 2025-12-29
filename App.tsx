@@ -394,18 +394,28 @@ const App: React.FC = () => {
     try {
       let promptToUse = currentPrompt;
 
+      // Determine the active style (from override OR state)
+      // FIX: Check if styleOverride is a valid object with an ID (not an Event)
+      const validOverride = (styleOverride && styleOverride.id) ? styleOverride : null;
+      const activeStyle = validOverride || selectedStyle;
+
+      if (!activeStyle) {
+        console.error("No style selected for regeneration");
+        return;
+      }
+
       // CRITICAL FIX: If the user CHANGED the style via dropdown, the old prompt (e.g. "Realistic photo...")
       // will conflict with the new style (e.g. "Comic book"). 
       // We MUST ask the Brain for a new prompt for the *new* style.
-      const styleChanged = result?.styleId !== selectedStyle?.id;
+      const styleChanged = result?.styleId !== activeStyle.id;
 
-      if (styleChanged && selectedStyle) {
-        console.log("🎨 Style changed during refinement. Asking Brain for new prompt...");
+      if (styleChanged) {
+        console.log(`🎨 Style changed from ${result?.styleId} to ${activeStyle.id}. Asking Brain for new prompt...`);
         // Re-ask Brain for prompt matching the NEW style
         // We use the same 'subject' we identified earlier.
         const brainResponse = await GeminiService.getBrainResponse(
           'style_description',
-          selectedStyle.id,
+          activeStyle.id,
           drawingSubject || "a drawing",
           userContextInput || ""
         );
@@ -416,12 +426,12 @@ const App: React.FC = () => {
 
       const effectivePrompt = refinementInput ? `${promptToUse} ${refinementInput}` : promptToUse;
 
-      const generatedImageBase64 = await GeminiService.generateStyledImage(inputImage, effectivePrompt, selectedStyle?.id);
+      const generatedImageBase64 = await GeminiService.generateStyledImage(inputImage, effectivePrompt, activeStyle.id);
 
       setResult(prev => prev ? {
         ...prev,
         styledImage: generatedImageBase64,
-        styleId: selectedStyle?.id || prev.styleId // Update result style ID too
+        styleId: activeStyle.id // Update result style ID too
       } : null);
 
       setAppState(AppState.RESULT);
