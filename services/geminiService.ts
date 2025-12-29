@@ -119,6 +119,10 @@ const getImageDimensions = (base64: string): Promise<{ width: number, height: nu
     }
     const img = new Image();
     img.onload = () => resolve({ width: img.width, height: img.height });
+    img.onerror = () => {
+      console.warn("⚠️ Failed to load image for dimension check. Defaulting to 1:1.");
+      resolve({ width: 1024, height: 1024 });
+    };
     img.src = base64;
   });
 };
@@ -215,7 +219,7 @@ export const generateStyledImage = async (
     // Validate G3 response
     const candidate = response.candidates?.[0];
     if (candidate?.content?.parts?.[0]?.inlineData?.data) {
-      return `data:image/png;base664,${candidate.content.parts[0].inlineData.data}`;
+      return `data:image/png;base64,${candidate.content.parts[0].inlineData.data}`;
     }
     throw new Error("Gemini 3 returned no image.");
 
