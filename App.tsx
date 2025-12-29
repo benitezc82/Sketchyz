@@ -377,7 +377,10 @@ const App: React.FC = () => {
 
 
 
-  const handleRegenerate = async () => {
+  const handleRegenerate = async (styleOverride?: any) => {
+    // NOTE: styleOverride is passed when auto-generating from the dropdown change
+    // so we don't rely on stale 'selectedStyle' state.
+
     // FIXED: Allow regeneration even if originalImage is null (Text Magic mode)
     if (!currentPrompt && !refinementInput) return;
 
@@ -864,9 +867,8 @@ const App: React.FC = () => {
                   const newStyle = STYLES.find(s => s.id === e.target.value);
                   if (newStyle) {
                     setSelectedStyle(newStyle);
-                    // Reset prompt to default for this new style to give them a fresh start
-                    // FIXED: 'styleBrain' is not available here. Use template string fallback.
-                    setCurrentPrompt(`${newStyle.name} style of ${drawingSubject}`);
+                    // AUTO-TRIGGER: Regenerate immediately when style changes!
+                    handleRegenerate(newStyle);
                   }
                 }}
                 className="appearance-none bg-gray-100 border-2 border-black rounded-lg py-1 pl-3 pr-8 font-bold text-sm focus:outline-none focus:border-[#4DE1C1] cursor-pointer text-black"
